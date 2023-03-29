@@ -1,0 +1,7 @@
+{
+  "name": "podtodo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
