@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, home, listOutline, square, triangle } from 'ionicons/icons';
+import { checkbox, checkboxOutline, home, homeOutline, people, peopleOutline } from 'ionicons/icons';
 import Home from './pages/Home';
 import Lists from './pages/Lists';
 import Tab3 from './pages/Tab3';
@@ -56,16 +56,19 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="home" href="/home">
-            <IonIcon aria-hidden="true" icon={home} />
+            <IonIcon aria-hidden="true" className='selected' icon={home}  />
+            <IonIcon aria-hidden="true" className = 'unselected' icon={homeOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
           <IonTabButton tab="lists" href="/lists">
-            <IonIcon aria-hidden="true" icon={listOutline} />
-            <IonLabel>My Lists</IonLabel>
+          <IonIcon aria-hidden="true" className='selected' icon={checkbox}  />
+            <IonIcon aria-hidden="true" className = 'unselected' icon={checkboxOutline} />
+            <IonLabel>Lists</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonIcon aria-hidden="true" className='selected' icon={people}  />
+            <IonIcon aria-hidden="true" className = 'unselected' icon={peopleOutline} />
+            <IonLabel>Pods</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

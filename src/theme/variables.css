@@ -1,10 +1,27 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+/* Tab settings */
+
+.tab-selected .unselected {
+  display: none;
+}
+
+.tab-selected .selected {
+  display: initial !important;
+}
+
+.selected {
+  display: none;
+}
+
 /** Ionic CSS Variables **/
 :root {
+
+  --ion-overlay-background-color: #e7e9e9;
   /** primary **/
   --ion-color-primary: #5bbab1;
+  /* --ion-color-primary: #439f96; */
   --ion-color-primary-rgb: 91, 186, 177;
   /* --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255; */
