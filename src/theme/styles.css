@@ -1,0 +1,25 @@
+ion-content {
+    --ion-background-color: #e7e9e9;
+    --padding-start: 1em;
+}
+
+/* Tab settings */
+
+.tab-selected .unselected {
+    display: none;
+}
+
+.tab-selected .selected {
+    display: initial !important;
+}
+
+.selected {
+    display: none;
+}
+
+/* Container Styles */
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+}
