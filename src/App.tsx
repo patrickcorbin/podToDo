@@ -14,6 +14,11 @@ import { checkbox, checkboxOutline, home, homeOutline, people, peopleOutline } f
 import Home from './pages/Home';
 import Lists from './pages/Lists';
 import Tab3 from './pages/Tab3';
+import Login from './pages/Login';
+
+import { useEffect, useState } from 'react'
+import { supabase } from './supabaseClient';
+import { Session } from '@supabase/supabase-js'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -39,7 +44,18 @@ import './theme/styles.css'
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+
+  const [session, setSession] = useState<Session | null>(null)
+
+  useEffect(() => {
+    // setSession(supabase.auth.getSession())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [session])
+
+  return (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
@@ -53,9 +69,14 @@ const App: React.FC = () => (
           <Route path="/tab3">
             <Tab3 />
           </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
+          <Route 
+            exact 
+            path="/"
+            render={() => {
+              return session ? <Redirect to="/home" /> : <Login />
+            }}
+          />
+
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="home" href="/home">
@@ -77,6 +98,6 @@ const App: React.FC = () => (
       </IonTabs>
     </IonReactRouter>
   </IonApp>
-);
+)};
 
 export default App;

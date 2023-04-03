@@ -3,6 +3,10 @@ ion-content {
     --padding-start: 1em;
 }
 
+ion-content.background-white {
+    --ion-background-color: #fff;
+}
+
 /* Tab settings */
 
 .tab-selected .unselected {

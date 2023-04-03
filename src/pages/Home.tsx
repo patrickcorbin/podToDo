@@ -2,7 +2,14 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from 
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
+import { supabase } from '../supabaseClient';
+
 const Home: React.FC = () => {
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -17,7 +24,7 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 1 page" />
-        <IonButton size="large">Test Button</IonButton>
+        <IonButton size="large" onClick={() => signOut()}>Logout</IonButton>
       </IonContent>
     </IonPage>
   );
