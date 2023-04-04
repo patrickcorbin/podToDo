@@ -8,37 +8,42 @@ import {
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar,
-    useIonToast,
-    useIonLoading,
+    IonToolbar
   } from '@ionic/react';
 
 import './Login.css'
 
 import { useState} from 'react';
-import { supabase } from '../supabaseClient';
+import { useSupabase } from '../hooks/useSupabase';
 
 const Login: React.FC = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [showLoading, hideLoading] = useIonLoading()
-    const [showToast] = useIonToast()
+    const { logIn } = useSupabase()
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log()
-        e.preventDefault();
-        await showLoading();
-        try {
-          await supabase.auth.signInWithPassword({ email, password });
-        //   await showToast({ message: 'Check your email for the login link!' });
-        } catch (e: any) {
-          await showToast({ message: e.error_description || e.message , duration: 5000});
-        } finally {
-          await hideLoading();
-        }
+        e.preventDefault()
+        await logIn(email, password)
     }
+
+    // const [showLoading, hideLoading] = useIonLoading()
+    // const [showToast] = useIonToast()
+
+    // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     console.log()
+    //     e.preventDefault();
+    //     await showLoading();
+    //     try {
+    //       await supabase.auth.signInWithPassword({ email, password });
+    //       await showToast({ message: 'Check your email for the login link!' });
+    //     } catch (e: any) {
+    //       await showToast({ message: e.error_description || e.message , duration: 5000});
+    //     } finally {
+    //       await hideLoading();
+    //     }
+    // }
 
     return (
         <IonPage>
