@@ -5,11 +5,14 @@ import ExploreContainer from '../components/ExploreContainer';
 import './Lists.css';
 
 import { supabase } from '../supabaseClient';
+import { useSupabase } from '../hooks/useSupabase';
 
 const Lists: React.FC = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+
+  const { getLists, lists } = useSupabase()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +32,8 @@ const Lists: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchData();
+    // fetchData();
+    getLists()
   }, []);
   
   // useEffect(() => {

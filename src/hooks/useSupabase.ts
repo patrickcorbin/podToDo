@@ -3,9 +3,13 @@ import { useState } from "react";
 
 import { supabase } from "../supabaseClient";
 
+// interface lists {
+//     any[]
+// }
+
 export function useSupabase() {
 
-    const [lists, setLists] = useState([])
+    const [lists, setLists] = useState<any>([])
 
     const [loading, setLoading] = useState(false)
     const [showLoading, hideLoading] = useIonLoading()
@@ -37,6 +41,11 @@ export function useSupabase() {
           if (error) {
             throw new Error(error.message);
           }
+
+          if (data) {
+            setLists(data)
+          }
+
           console.log(data);
         } catch (error) {
           // setError(error);
@@ -65,7 +74,8 @@ export function useSupabase() {
     return {
         logIn,
         logOut,
-        getLists
+        getLists,
+        lists
     }
 
 }
