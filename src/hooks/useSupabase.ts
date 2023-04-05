@@ -5,6 +5,9 @@ import { supabase } from "../supabaseClient";
 
 export function useSupabase() {
 
+    const [lists, setLists] = useState([])
+
+    const [loading, setLoading] = useState(false)
     const [showLoading, hideLoading] = useIonLoading()
     const [showToast] = useIonToast()
 
@@ -24,9 +27,45 @@ export function useSupabase() {
         const { error } = await supabase.auth.signOut()
     }
 
+    const getLists = async () => {
+        setLoading(true);
+        try {
+          const { data, error } = await supabase
+          .from('LISTS')
+          .select()
+
+          if (error) {
+            throw new Error(error.message);
+          }
+          console.log(data);
+        } catch (error) {
+          // setError(error);
+          console.log(error)
+        } finally {
+          setLoading(false);
+        }
+        // await showLoading()
+        // try {
+    
+        //   const { error, data } = await supabase
+        //     .from("LISTS")
+        //     .select()
+    
+        //   if (error) throw error; //check if there was an error fetching the data and move the execution to the catch block
+    
+        //   if (data) setLists(data);
+    
+        // } catch (error) {
+        //   alert(error.error_description || error.message);
+        // } finally {
+        //   await hideLoading()
+        // }
+    }
+
     return {
         logIn,
-        logOut
+        logOut,
+        getLists
     }
 
 }
