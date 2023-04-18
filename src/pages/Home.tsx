@@ -2,16 +2,19 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from 
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
-// import { supabase } from '../supabaseClient';
+import useUser from '../hooks/useUser';
 import { useSupabase } from '../hooks/useSupabase';
 
 const Home: React.FC = () => {
 
   const { logOut } = useSupabase()
 
+  const { data } = useUser()
+
   // async function signOut() {
   //   await logOut()
   // }
+
 
   return (
     <IonPage>

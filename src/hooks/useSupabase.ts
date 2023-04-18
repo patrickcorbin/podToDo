@@ -3,10 +3,6 @@ import { useState } from "react";
 
 import { supabase } from "../supabaseClient";
 
-// interface lists {
-//     any[]
-// }
-
 export function useSupabase() {
 
     const [lists, setLists] = useState<any>([])

@@ -14,22 +14,30 @@ import {
 import './Login.css'
 
 import { useState} from 'react';
-import { useSupabase } from '../hooks/useSupabase';
+// import { useSupabase } from '../hooks/useSupabase';
+import useLogin from '../hooks/useLogin';
 
 const Login: React.FC = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { logIn } = useSupabase()
+    // const [showLoading, hideLoading] = useIonLoading()
+    // const [showToast] = useIonToast()
+
+    // const { logIn } = useSupabase()
+
+    const loginMutation = useLogin(email, password)
+
+    // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     await logIn(email, password)
+    // }
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        await logIn(email, password)
+        loginMutation.mutate()
     }
-
-    // const [showLoading, hideLoading] = useIonLoading()
-    // const [showToast] = useIonToast()
 
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     //     console.log()
@@ -58,6 +66,7 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 </div>
                 <IonList inset={true}>
+                {/* <form onSubmit={handleLogin}> */}
                 <form onSubmit={handleLogin}>
                     <IonItem>
                     <IonLabel position="stacked">Email</IonLabel>
