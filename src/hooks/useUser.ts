@@ -19,12 +19,20 @@ const getUser = async (userId: string | undefined) => {
     return data
 }
 
-export default function useUser() {
+// export default async function useUser() {
+//     // const { data } = await supabase.auth.getSession()
+//     const { data } = await supabase.auth.getUser()
+//     // const { data: { user } } = await supabase.auth.getUser()
+//     return useQuery('user', async () => {
+//         console.log('fetch user')
+//         // return await getUser(data.session?.user.id)
+//         return await getUser(data.user?.id)
+//     })
+// }
+
+export default async function useUser() {
     // const { data } = await supabase.auth.getSession()
+    const { data } = await supabase.auth.getUser()
     // const { data: { user } } = await supabase.auth.getUser()
-    return useQuery('user', async () => {
-        const { data } = await supabase.auth.getSession()
-        console.log('fetch user')
-        return getUser(data.session?.user.id)
-    })
-  }
+    return useQuery('user', () => getUser(data.user?.id))
+}
