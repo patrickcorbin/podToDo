@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonHeader, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonItem, IonPage, IonTitle, IonToolbar, IonSkeletonText} from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
@@ -27,9 +27,30 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 1 page" />
-        <IonButton size="large" onClick={logOut}>Logout</IonButton>
-        <IonItem>{data?.email}</IonItem>
-        <IonItem>{profile?.first_name}</IonItem>
+        <IonButton 
+          size="large" 
+          onClick={logOut}
+          routerLink={'/login'}
+        >Logout</IonButton>
+        {
+          profile ? 
+            <>
+            <IonItem>
+                {data?.email}
+              </IonItem>
+              <IonItem>
+                  {profile?.first_name}
+              </IonItem> 
+            </> :
+            <>
+              <IonItem>
+                <IonSkeletonText animated={true} style={{ 'width': '30%' }}></IonSkeletonText>
+              </IonItem>
+              <IonItem>
+                <IonSkeletonText animated={true} style={{ 'width': '30%' }}></IonSkeletonText>
+              </IonItem>
+            </>
+        }
       </IonContent>
     </IonPage>
   );

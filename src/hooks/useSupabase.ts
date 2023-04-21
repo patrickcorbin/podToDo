@@ -1,4 +1,4 @@
-import { useIonLoading, useIonToast } from "@ionic/react";
+import { useIonLoading, useIonToast} from "@ionic/react";
 import { useState } from "react";
 
 import { supabase } from "../supabaseClient";

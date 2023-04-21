@@ -63,11 +63,17 @@ const App: React.FC = () => {
           <Route exact path="/home">
             <Home />
           </Route>
-          <Route exact path="/lists">
-            <Lists />
-          </Route>
+          <Route 
+            exact path="/lists"
+            render={() => {
+              return session ? <Lists /> : <Redirect to="/login" />
+            }}
+          />
           <Route path="/tab3">
             <Tab3 />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
           <Route 
             exact 

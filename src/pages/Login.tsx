@@ -94,6 +94,7 @@ const Login: React.FC = () => {
                         type='submit' 
                         size='large'
                         expand='block'
+                        routerLink='/home'
                     >
                         Login
                     </IonButton>

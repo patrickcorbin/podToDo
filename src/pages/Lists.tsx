@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonPage, IonSkeletonText, IonTitle, IonToolbar, IonThumbnail, IonLabel } from '@ionic/react';
 import { useEffect, useState } from 'react';
 
 import ExploreContainer from '../components/ExploreContainer';
@@ -57,6 +57,24 @@ const Lists: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 2 page" />
+        {loading && <IonItem>
+          <IonThumbnail slot="start">
+              <IonSkeletonText animated={true}></IonSkeletonText>
+            </IonThumbnail>
+            <IonLabel>
+              <h3>
+                <IonSkeletonText animated={true} style={{ 'width': '80%' }}></IonSkeletonText>
+              </h3>
+              <p>
+                <IonSkeletonText animated={true} style={{ 'width': '60%' }}></IonSkeletonText>
+              </p>
+              <p>
+                <IonSkeletonText animated={true} style={{ 'width': '30%' }}></IonSkeletonText>
+              </p>
+            </IonLabel>
+          </IonItem>
+        }
+        <h2>test 2</h2>
       </IonContent>
     </IonPage>
   );
