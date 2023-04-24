@@ -41,6 +41,10 @@ import './theme/variables.css';
 
 /* Common styling */
 import './theme/styles.css'
+import PublicRoute from './routes/PublicRoute';
+import PublicSections from './routes/PublicSections';
+import PrivateRoute from './routes/PrivateRoute';
+import PrivateSections from './routes/PrivateSections';
 
 setupIonicReact();
 
@@ -60,6 +64,19 @@ const App: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
+
+          {/* <Route path="/*">
+            <PublicRoute session={session}>
+              <PublicSections />
+            </PublicRoute>
+          </Route>
+
+          <Route path="/">
+            <PrivateRoute session={session}>
+              <PrivateSections />
+            </PrivateRoute>
+          </Route> */}
+
           <Route exact path="/home">
             <Home />
           </Route>
@@ -69,10 +86,13 @@ const App: React.FC = () => {
               return session ? <Lists /> : <Redirect to="/login" />
             }}
           />
-          <Route path="/tab3">
+          <PrivateRoute session={session}>
+          <Route exact path="/tab3">
             <Tab3 />
           </Route>
-          <Route path="/login">
+          </PrivateRoute>
+          
+          <Route exact path="/login">
             <Login />
           </Route>
           <Route 
