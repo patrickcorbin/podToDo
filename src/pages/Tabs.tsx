@@ -1,18 +1,3 @@
-// import { Redirect } from 'react-router-dom';
-
-// interface ContainerProps {
-//     children: any;
-//     session: any;
-// }
-
-// const PrivateRoute: React.FC<ContainerProps> = ({ children, session }) => {
-//     return session 
-//         ? children
-//         : <Redirect to="/login" />
-// }
-
-// export default PrivateRoute
-
 import { Redirect, Route } from 'react-router-dom';
 import {
     IonIcon,
@@ -25,38 +10,39 @@ import {
 import { checkbox, checkboxOutline, home, homeOutline, people, peopleOutline } from 'ionicons/icons';
 import Home from '../pages/Home';
 import Lists from '../pages/Lists';
-import Tab3 from '../pages/Tab3';
+import Tab3 from './Tab3';
 
 
-const PrivateRoute: React.FC = () => {
+
+const Tabs: React.FC = () => {
     return (
         <IonTabs>
             <IonRouterOutlet>
-                <Route exact path="/home">
+                <Route exact path="/app/home">
                     <Home />
                 </Route>
-                <Route exact path="/lists">
+                <Route path="/app/lists">
                     <Lists />
                 </Route>
-                <Route exact path="/tab3">
+                <Route exact path="/app/tab3">
                     <Tab3 />
                 </Route>
-                <Route exact path="/">
-                    <Redirect to="/home" />
+                <Route exact path="/app/">
+                    <Redirect to="/app/home" />
                 </Route>
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
-                <IonTabButton tab="home" href="/home">
+                <IonTabButton tab="home" href="/app/home">
                     <IonIcon aria-hidden="true" className='selected' icon={home}  />
                     <IonIcon aria-hidden="true" className = 'unselected' icon={homeOutline} />
                     <IonLabel>Home</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="lists" href="/lists">
+                <IonTabButton tab="lists" href="/app/lists">
                 <IonIcon aria-hidden="true" className='selected' icon={checkbox}  />
                     <IonIcon aria-hidden="true" className = 'unselected' icon={checkboxOutline} />
                     <IonLabel>Lists</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="tab3" href="/tab3">
+                <IonTabButton tab="tab3" href="/app/tab3">
                     <IonIcon aria-hidden="true" className='selected' icon={people}  />
                     <IonIcon aria-hidden="true" className = 'unselected' icon={peopleOutline} />
                     <IonLabel>Pods</IonLabel>
@@ -66,4 +52,4 @@ const PrivateRoute: React.FC = () => {
     )
 }
 
-export default PrivateRoute
+export default Tabs

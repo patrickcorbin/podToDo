@@ -45,6 +45,8 @@ import PublicRoute from './routes/PublicRoute';
 import PublicSections from './routes/PublicSections';
 import PrivateRoute from './routes/PrivateRoute';
 import PrivateSections from './routes/PrivateSections';
+import { useUser } from './hooks/useUser';
+import Tabs from './pages/Tabs';
 
 setupIonicReact();
 
@@ -59,23 +61,41 @@ const App: React.FC = () => {
     })
   }, [session])
 
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+    })
+  }, [])
+
   return (
   <IonApp>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
 
-          {/* <Route path="/*">
-            <PublicRoute session={session}>
-              <PublicSections />
-            </PublicRoute>
+      {/* {
+        user
+          ? <PrivateRoute />
+          : <PublicRoute />
+      } */}
+
+      <IonRouterOutlet>
+          <Route exact path="/login">
+            <Login />
           </Route>
-
-          <Route path="/">
-            <PrivateRoute session={session}>
-              <PrivateSections />
-            </PrivateRoute>
-          </Route> */}
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
+          {/* <Route
+            path="/app"
+            render={() => {
+              return user ? <Tabs /> : <Redirect to="/login" />
+            }}
+          /> */}
+          <Route path="/app">
+            <Tabs />
+          </Route>
+      </IonRouterOutlet>
+      {/* <IonTabs>
+        <IonRouterOutlet>
 
           <Route exact path="/home">
             <Home />
@@ -86,12 +106,9 @@ const App: React.FC = () => {
               return session ? <Lists /> : <Redirect to="/login" />
             }}
           />
-          <PrivateRoute session={session}>
           <Route exact path="/tab3">
             <Tab3 />
           </Route>
-          </PrivateRoute>
-          
           <Route exact path="/login">
             <Login />
           </Route>
@@ -121,7 +138,7 @@ const App: React.FC = () => {
             <IonLabel>Pods</IonLabel>
           </IonTabButton>
         </IonTabBar>
-      </IonTabs>
+      </IonTabs> */}
     </IonReactRouter>
   </IonApp>
 )};
