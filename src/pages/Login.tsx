@@ -4,11 +4,11 @@ import {
     IonHeader,
     IonInput,
     IonItem,
-    IonLabel,
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    useIonRouter
   } from '@ionic/react';
 
 import './Login.css'
@@ -74,7 +74,7 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 </div>
                 <IonList inset={true}>
-                <form onSubmit={(e) => handleSignIn(e)}>
+                <form onSubmit={async (e) => handleSignIn(e)}>
                     <IonItem>
                     {/* <IonLabel position="stacked">Email</IonLabel> */}
                     <IonInput

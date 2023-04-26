@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { AuthProvider } from './AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -13,10 +14,12 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <QueryClientProvider client={queryClient}>
+    <AuthProvider>
     <React.StrictMode>
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </React.StrictMode>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

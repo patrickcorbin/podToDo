@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   // const { data } = useUser()
   const { data: profile } = useProfile()
 
-  console.log('test2', user)
+  // console.log('test2', user)
 
   return (
     <IonPage>

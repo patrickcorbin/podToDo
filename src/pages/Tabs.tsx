@@ -11,6 +11,7 @@ import { checkbox, checkboxOutline, home, homeOutline, people, peopleOutline } f
 import Home from '../pages/Home';
 import Lists from '../pages/Lists';
 import Tab3 from './Tab3';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 
 
@@ -25,7 +26,9 @@ const Tabs: React.FC = () => {
                     <Lists />
                 </Route>
                 <Route exact path="/app/tab3">
-                    <Tab3 />
+                    <ProtectedRoute>
+                        <Tab3 />
+                    </ProtectedRoute>
                 </Route>
                 <Route exact path="/app/">
                     <Redirect to="/app/home" />

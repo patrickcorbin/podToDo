@@ -26,7 +26,7 @@ import PrivateRoute from './routes/PrivateRoute';
 import PrivateSections from './routes/PrivateSections';
 // import { useUser } from './hooks/useUser';
 import Tabs from './pages/Tabs';
-import { AuthProvider } from './AuthContext';
+import { AuthProvider, useAuth } from './AuthContext';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -64,39 +64,44 @@ const App: React.FC = () => {
   //   })
   // }, [session])
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
-    })
-  }, [])
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  //     if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+  //   })
+  // }, [])
+
+  const { user } = useAuth()
+
+  console.log('test from app', user?.email)
 
   return (
   <IonApp>
-    <AuthProvider>
     <IonReactRouter>
-
-      {/* {
-        user
-          ? <PrivateRoute />
-          : <PublicRoute />
-      } */}
-
       <IonRouterOutlet>
           <Route exact path="/login">
             <Login />
           </Route>
           <Route exact path="/">
-            <Redirect to="/login" />
+            <Redirect to="/app/home" />
           </Route>
-          {/* <Route
-            path="/app"
+          {/* <Route exact path="/">
+            <Redirect to="/login" />
+          </Route> */}
+          {/* <Route 
+            exact path="/"
             render={() => {
               return user ? <Tabs /> : <Redirect to="/login" />
             }}
           /> */}
-          <Route path="/app">
+          <Route
+            path="/app"
+            render={() => {
+              return user ? <Tabs /> : <Redirect to="/login" />
+            }}
+          />
+          {/* <Route path="/app">
             <Tabs />
-          </Route>
+          </Route> */}
       </IonRouterOutlet>
       {/* <IonTabs>
         <IonRouterOutlet>
@@ -144,7 +149,6 @@ const App: React.FC = () => {
         </IonTabBar>
       </IonTabs> */}
     </IonReactRouter>
-    </AuthProvider>
   </IonApp>
 )};
 
