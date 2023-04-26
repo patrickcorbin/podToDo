@@ -4,14 +4,17 @@ import './Home.css';
 
 import { useProfile, useUser } from '../hooks/useUser';
 import { useSupabase } from '../hooks/useSupabase';
+import { useAuth } from '../AuthContext';
 
 const Home: React.FC = () => {
 
-  const { logOut } = useSupabase()
+  // const { logOut } = useSupabase()
+  const { signOut, user } = useAuth()
 
-  const { data } = useUser()
+  // const { data } = useUser()
   const { data: profile } = useProfile()
 
+  console.log('test2', user)
 
   return (
     <IonPage>
@@ -29,17 +32,18 @@ const Home: React.FC = () => {
         <ExploreContainer name="Tab 1 page" />
         <IonButton 
           size="large" 
-          onClick={logOut}
+          // onClick={logOut}
+          onClick={signOut}
           routerLink={'/login'}
         >Logout</IonButton>
         {
           profile ? 
             <>
-            <IonItem>
-                {data?.email}
+              <IonItem>
+                {user?.email}
               </IonItem>
               <IonItem>
-                  {profile?.first_name}
+                {profile?.first_name}
               </IonItem> 
             </> :
             <>

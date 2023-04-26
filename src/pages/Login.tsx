@@ -16,6 +16,7 @@ import './Login.css'
 import { useState} from 'react';
 // import { useSupabase } from '../hooks/useSupabase';
 import useLogin from '../hooks/useLogin';
+import { useAuth } from '../AuthContext';
 
 const Login: React.FC = () => {
 
@@ -29,6 +30,8 @@ const Login: React.FC = () => {
 
     const loginMutation = useLogin(email, password)
 
+    const { signIn } = useAuth()
+
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault()
     //     await logIn(email, password)
@@ -37,6 +40,11 @@ const Login: React.FC = () => {
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         loginMutation.mutate()
+    }
+
+    const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        signIn(email, password)
     }
 
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,23 +74,26 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 </div>
                 <IonList inset={true}>
-                {/* <form onSubmit={handleLogin}> */}
-                <form onSubmit={handleLogin}>
+                <form onSubmit={(e) => handleSignIn(e)}>
                     <IonItem>
-                    <IonLabel position="stacked">Email</IonLabel>
+                    {/* <IonLabel position="stacked">Email</IonLabel> */}
                     <IonInput
                         value={email}
                         name="email"
+                        label='Email'
+                        labelPlacement='stacked'
                         // onIonChange={(e) => setEmail(e.detail.value ?? '')}
                         onIonChange={(e) => setEmail(e.detail.value! as string)}
                         type="email"
                     ></IonInput>
                     </IonItem>
                     <IonItem>
-                    <IonLabel position="stacked">Password</IonLabel>
+                    {/* <IonLabel position="stacked">Password</IonLabel> */}
                     <IonInput
                         value={password}
                         name="password"
+                        label='Password'
+                        labelPlacement='stacked'
                         // onIonChange={(e) => setEmail(e.detail.value ?? '')}
                         onIonChange={(e) => setPassword(e.detail.value! as string)}
                         type="password"

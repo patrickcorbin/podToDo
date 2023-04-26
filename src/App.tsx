@@ -20,6 +20,14 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient';
 import { Session } from '@supabase/supabase-js'
 
+import PublicRoute from './routes/PublicRoute';
+import PublicSections from './routes/PublicSections';
+import PrivateRoute from './routes/PrivateRoute';
+import PrivateSections from './routes/PrivateSections';
+// import { useUser } from './hooks/useUser';
+import Tabs from './pages/Tabs';
+import { AuthProvider } from './AuthContext';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -41,25 +49,20 @@ import './theme/variables.css';
 
 /* Common styling */
 import './theme/styles.css'
-import PublicRoute from './routes/PublicRoute';
-import PublicSections from './routes/PublicSections';
-import PrivateRoute from './routes/PrivateRoute';
-import PrivateSections from './routes/PrivateSections';
-import { useUser } from './hooks/useUser';
-import Tabs from './pages/Tabs';
+
 
 setupIonicReact();
 
 const App: React.FC = () => {
 
-  const [session, setSession] = useState<Session | null>(null)
+  // const [session, setSession] = useState<Session | null>(null)
 
-  useEffect(() => {
-    // setSession(supabase.auth.getSession())
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [session])
+  // useEffect(() => {
+  //   // setSession(supabase.auth.getSession())
+  //   supabase.auth.onAuthStateChange((_event, session) => {
+  //     setSession(session)
+  //   })
+  // }, [session])
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -69,6 +72,7 @@ const App: React.FC = () => {
 
   return (
   <IonApp>
+    <AuthProvider>
     <IonReactRouter>
 
       {/* {
@@ -140,6 +144,7 @@ const App: React.FC = () => {
         </IonTabBar>
       </IonTabs> */}
     </IonReactRouter>
+    </AuthProvider>
   </IonApp>
 )};
 
