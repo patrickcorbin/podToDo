@@ -25,8 +25,8 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // const [showLoading, hideLoading] = useIonLoading()
-    // const [showToast] = useIonToast()
+    const [showLoading, hideLoading] = useIonLoading()
+    const [showToast] = useIonToast()
 
     // const { logIn } = useSupabase()
 
@@ -51,10 +51,6 @@ const Login: React.FC = () => {
         signIn(email, password)
     }
 
-    const [loading, setLoading] = useState(false)
-    const [showLoading, hideLoading] = useIonLoading()
-    const [showToast] = useIonToast()
-
     const logIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         await showLoading();
@@ -67,7 +63,6 @@ const Login: React.FC = () => {
         } finally {
         //   setEmail('')
           await hideLoading();
-
         }
     }
 
@@ -100,25 +95,21 @@ const Login: React.FC = () => {
                 <IonList inset={true}>
                 <form onSubmit={async (e) => logIn(e)}>
                     <IonItem>
-                    {/* <IonLabel position="stacked">Email</IonLabel> */}
                     <IonInput
                         value={email}
                         name="email"
                         label='Email'
                         labelPlacement='stacked'
-                        // onIonChange={(e) => setEmail(e.detail.value ?? '')}
                         onIonChange={(e) => setEmail(e.detail.value! as string)}
                         type="email"
                     ></IonInput>
                     </IonItem>
                     <IonItem>
-                    {/* <IonLabel position="stacked">Password</IonLabel> */}
                     <IonInput
                         value={password}
                         name="password"
                         label='Password'
                         labelPlacement='stacked'
-                        // onIonChange={(e) => setEmail(e.detail.value ?? '')}
                         onIonChange={(e) => setPassword(e.detail.value! as string)}
                         type="password"
                     ></IonInput>
