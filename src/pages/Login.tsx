@@ -8,12 +8,14 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    useIonRouter
+    useIonLoading,
+    useIonRouter,
+    useIonToast
   } from '@ionic/react';
 
 import './Login.css'
 
-import { useState} from 'react';
+import { useState } from 'react';
 // import { useSupabase } from '../hooks/useSupabase';
 import useLogin from '../hooks/useLogin';
 import { useAuth } from '../AuthContext';
@@ -32,6 +34,8 @@ const Login: React.FC = () => {
 
     const { signIn } = useAuth()
 
+    const router = useIonRouter()
+
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault()
     //     await logIn(email, password)
@@ -45,6 +49,26 @@ const Login: React.FC = () => {
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         signIn(email, password)
+    }
+
+    const [loading, setLoading] = useState(false)
+    const [showLoading, hideLoading] = useIonLoading()
+    const [showToast] = useIonToast()
+
+    const logIn = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        await showLoading();
+        try {
+            await signIn(email, password)
+        //   await supabase.auth.signInWithPassword({ email, password });
+        //   await showToast({ message: 'Check your email for the login link!' });
+        } catch (err: any) {
+          await showToast({ message: err.error_description || err.message , duration: 5000});
+        } finally {
+        //   setEmail('')
+          await hideLoading();
+
+        }
     }
 
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,7 +98,7 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 </div>
                 <IonList inset={true}>
-                <form onSubmit={async (e) => handleSignIn(e)}>
+                <form onSubmit={async (e) => logIn(e)}>
                     <IonItem>
                     {/* <IonLabel position="stacked">Email</IonLabel> */}
                     <IonInput
