@@ -86,24 +86,15 @@ const App: React.FC = () => {
           <Route exact path="/">
             <Redirect to="/app/home" />
           </Route>
-          {/* <Route exact path="/">
-            <Redirect to="/login" />
+          {/* <Route path="/app">
+            <Tabs />
           </Route> */}
-          {/* <Route 
-            exact path="/"
-            render={() => {
-              return user ? <Tabs /> : <Redirect to="/login" />
-            }}
-          /> */}
           <Route
             path="/app"
             render={() => {
               return user ? <Tabs /> : <Redirect to="/login" />
             }}
           />
-          {/* <Route path="/app">
-            <Tabs />
-          </Route> */}
       </IonRouterOutlet>
       {/* <IonTabs>
         <IonRouterOutlet>

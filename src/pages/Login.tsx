@@ -15,10 +15,11 @@ import {
 
 import './Login.css'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { useSupabase } from '../hooks/useSupabase';
 import useLogin from '../hooks/useLogin';
 import { useAuth } from '../AuthContext';
+import { supabase } from '../supabaseClient';
 
 const Login: React.FC = () => {
 
@@ -32,7 +33,7 @@ const Login: React.FC = () => {
 
     const loginMutation = useLogin(email, password)
 
-    const { signIn } = useAuth()
+    const { signIn, user } = useAuth()
 
     const router = useIonRouter()
 
@@ -49,6 +50,8 @@ const Login: React.FC = () => {
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         signIn(email, password)
+        setEmail('')
+        setPassword('')
     }
 
     const logIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,6 +68,21 @@ const Login: React.FC = () => {
           await hideLoading();
         }
     }
+
+    useEffect(() => {
+        // supabase.auth.onAuthStateChange((event, session) => {
+        // if (event === 'SIGNED_IN') {
+        //     console.log('signed in', session)
+        //     router.push('/app/home', 'forward', 'replace')
+        // }
+        // })
+        console.log('user var changed', user)
+        if (user) {
+            console.log('user var changed', user)
+            router.push('/app/home', 'forward', 'replace')
+        }
+        
+    }, [user])
 
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     //     console.log()
@@ -93,7 +111,7 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 </div>
                 <IonList inset={true}>
-                <form onSubmit={async (e) => logIn(e)}>
+                <form onSubmit={async (e) => handleSignIn(e)}>
                     <IonItem>
                     <IonInput
                         value={email}
@@ -120,7 +138,7 @@ const Login: React.FC = () => {
                         type='submit' 
                         size='large'
                         expand='block'
-                        routerLink='/app/home'
+                        // routerLink='/app/home'
                     >
                         Login
                     </IonButton>
