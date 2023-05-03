@@ -69,20 +69,20 @@ const Login: React.FC = () => {
         }
     }
 
-    useEffect(() => {
-        // supabase.auth.onAuthStateChange((event, session) => {
-        // if (event === 'SIGNED_IN') {
-        //     console.log('signed in', session)
-        //     router.push('/app/home', 'forward', 'replace')
-        // }
-        // })
-        console.log('user var changed', user)
-        if (user) {
-            console.log('user var changed', user)
-            router.push('/app/home', 'forward', 'replace')
-        }
+    // useEffect(() => {
+    //     // supabase.auth.onAuthStateChange((event, session) => {
+    //     // if (event === 'SIGNED_IN') {
+    //     //     console.log('signed in', session)
+    //     //     router.push('/app/home', 'forward', 'replace')
+    //     // }
+    //     // })
+    //     console.log('user var changed', user)
+    //     if (user) {
+    //         console.log('user var changed', user)
+    //         router.push('/app/home', 'forward', 'replace')
+    //     }
         
-    }, [user])
+    // }, [user])
 
     // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     //     console.log()
@@ -138,9 +138,19 @@ const Login: React.FC = () => {
                         type='submit' 
                         size='large'
                         expand='block'
-                        // routerLink='/app/home'
+                        routerLink='/app/home'
                     >
                         Login
+                    </IonButton>
+                    <IonButton 
+                        className='login-btn'
+                        type='button'
+                        fill='clear'
+                        size='default'
+                        expand='block'
+                        routerLink='/app/home'
+                    >
+                        CREATE AN ACCOUNT
                     </IonButton>
                     </div>
                 </form>
