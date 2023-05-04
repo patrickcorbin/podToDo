@@ -148,7 +148,7 @@ const Login: React.FC = () => {
                         fill='clear'
                         size='default'
                         expand='block'
-                        routerLink='/app/home'
+                        routerLink='/signup'
                     >
                         CREATE AN ACCOUNT
                     </IonButton>

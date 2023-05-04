@@ -2,15 +2,20 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
 import useGetLists from '../hooks/useGetLists';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+import useGetItems from '../hooks/useGetItems';
 
 const Tab3: React.FC = () => {
 
-  const { data } = useGetLists()
+  const { data: lists } = useGetLists()
 
-  useEffect(() => console.log('test'), [])
+  const { data: items } = useGetItems(2)
 
-  const listDisplay = data?.map(item => <h2>{item.name}</h2>)
+  // useEffect(() => console.log('test'), [])
+
+  const listDisplay = lists?.map(item => <h2>{item.name}</h2>)
+
+  const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
 
   return (
     <IonPage>
@@ -27,6 +32,7 @@ const Tab3: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Tab 3 page" />
         {listDisplay}
+        {itemDisplay}
       </IonContent>
     </IonPage>
   );

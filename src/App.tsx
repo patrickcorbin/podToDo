@@ -49,6 +49,7 @@ import './theme/variables.css';
 
 /* Common styling */
 import './theme/styles.css'
+import SignUp from './pages/SignUp';
 
 
 setupIonicReact();
@@ -82,6 +83,9 @@ const App: React.FC = () => {
       <IonRouterOutlet>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
           </Route>
           {/* <Route exact path="/">
             <Redirect to="/app/home" />
