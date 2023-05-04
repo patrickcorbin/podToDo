@@ -3,7 +3,7 @@ import { supabase } from "../supabaseClient";
 
 const fetchItems = async (listId: number) => {
     const { data, error } = await supabase
-        .from('listitems')
+        .from('listItems')
         .select()
         .eq('list_id', listId)
 
