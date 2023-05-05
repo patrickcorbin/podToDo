@@ -10,6 +10,7 @@ import {
 import { checkbox, checkboxOutline, home, homeOutline, people, peopleOutline } from 'ionicons/icons';
 import Home from '../pages/Home';
 import Lists from '../pages/Lists';
+import ListDetail from '../pages/ListDetail';
 import Tab3 from './Tab3';
 import ProtectedRoute from '../components/ProtectedRoute';
 
@@ -22,8 +23,11 @@ const Tabs: React.FC = () => {
                 <Route exact path="/app/home">
                     <Home />
                 </Route>
-                <Route path="/app/lists">
+                <Route exact path="/app/lists">
                     <Lists />
+                </Route>
+                <Route path="/app/lists/list">
+                    <ListDetail />
                 </Route>
                 <Route exact path="/app/tab3">
                     <ProtectedRoute>

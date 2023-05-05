@@ -1,80 +1,44 @@
-import { IonContent, IonHeader, IonItem, IonPage, IonSkeletonText, IonTitle, IonToolbar, IonThumbnail, IonLabel } from '@ionic/react';
-import { useEffect, useState } from 'react';
-
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { cart, checkmarkCircle } from 'ionicons/icons';
 import './Lists.css';
 
-import { supabase } from '../supabaseClient';
-import { useSupabase } from '../hooks/useSupabase';
+import useGetLists from '../hooks/useGetLists';
+import useGetItems from '../hooks/useGetItems';
 
 const Lists: React.FC = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
 
-  const { getLists, lists } = useSupabase()
+  const { data: lists } = useGetLists()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-        .from('LISTS')
-        .select()
-        if (error) {
-          throw new Error(error.message);
-        }
-        console.log(data);
-      } catch (error) {
-        // setError(error);
-        console.log(error)
-      } finally {
-        setLoading(false);
-      }
-    };
-    // fetchData();
-    getLists()
-  }, []);
-  
-  // useEffect(() => {
-  //   const getLists = async () => {
-  //     const { data, error } = await supabase
-  //       .from('LISTS')
-  //       .select()
-  // })
+  const { data: items } = useGetItems(2)
+
+  const listDisplay = lists?.map(item => (
+    <IonItem className="background-white"
+      routerLink='/app/lists/list'
+    >
+      <IonIcon icon={item.list_type === 'grocery' ? cart : checkmarkCircle} slot='start' /> 
+      {item.name}
+    </IonItem>
+  ))
+
+  const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>My Lists</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">My Lists</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
-        {loading && <IonItem>
-          <IonThumbnail slot="start">
-              <IonSkeletonText animated={true}></IonSkeletonText>
-            </IonThumbnail>
-            <IonLabel>
-              <h3>
-                <IonSkeletonText animated={true} style={{ 'width': '80%' }}></IonSkeletonText>
-              </h3>
-              <p>
-                <IonSkeletonText animated={true} style={{ 'width': '60%' }}></IonSkeletonText>
-              </p>
-              <p>
-                <IonSkeletonText animated={true} style={{ 'width': '30%' }}></IonSkeletonText>
-              </p>
-            </IonLabel>
-          </IonItem>
-        }
-        <h2>test 2</h2>
+        <IonList className="container">
+          {listDisplay}
+        </IonList>
+        {itemDisplay}
       </IonContent>
     </IonPage>
   );

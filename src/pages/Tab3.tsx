@@ -1,21 +1,47 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonPage, IonSkeletonText, IonTitle, IonToolbar, IonThumbnail, IonLabel } from '@ionic/react';
+import { useEffect, useState } from 'react';
+
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
-import useGetLists from '../hooks/useGetLists';
-// import { useEffect } from 'react';
-import useGetItems from '../hooks/useGetItems';
+
+import { supabase } from '../supabaseClient';
+import { useSupabase } from '../hooks/useSupabase';
 
 const Tab3: React.FC = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const { data: lists } = useGetLists()
+  const { getLists, lists } = useSupabase()
 
-  const { data: items } = useGetItems(2)
-
-  // useEffect(() => console.log('test'), [])
-
-  const listDisplay = lists?.map(item => <h2>{item.name}</h2>)
-
-  const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+        .from('LISTS')
+        .select()
+        if (error) {
+          throw new Error(error.message);
+        }
+        console.log(data);
+      } catch (error) {
+        // setError(error);
+        console.log(error)
+      } finally {
+        setLoading(false);
+      }
+    };
+    // fetchData();
+    getLists()
+  }, []);
+  
+  // useEffect(() => {
+  //   const getLists = async () => {
+  //     const { data, error } = await supabase
+  //       .from('LISTS')
+  //       .select()
+  // })
 
   return (
     <IonPage>
@@ -31,8 +57,24 @@ const Tab3: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 3 page" />
-        {listDisplay}
-        {itemDisplay}
+        {loading && <IonItem>
+          <IonThumbnail slot="start">
+              <IonSkeletonText animated={true}></IonSkeletonText>
+            </IonThumbnail>
+            <IonLabel>
+              <h3>
+                <IonSkeletonText animated={true} style={{ 'width': '80%' }}></IonSkeletonText>
+              </h3>
+              <p>
+                <IonSkeletonText animated={true} style={{ 'width': '60%' }}></IonSkeletonText>
+              </p>
+              <p>
+                <IonSkeletonText animated={true} style={{ 'width': '30%' }}></IonSkeletonText>
+              </p>
+            </IonLabel>
+          </IonItem>
+        }
+        <h2>test 2</h2>
       </IonContent>
     </IonPage>
   );

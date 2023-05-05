@@ -1,6 +1,7 @@
 ion-content {
     --ion-background-color: #e7e9e9;
     --padding-start: 1em;
+    --padding-end: 1em;
 }
 
 ion-content.background-white {
@@ -26,4 +27,8 @@ ion-content.background-white {
 .container {
     background-color: #fff;
     border-radius: 10px;
+}
+
+ion-item {
+    --ion-background-color: #fff;
 }
