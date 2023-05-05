@@ -14,6 +14,6 @@ const fetchItems = async (listId: number) => {
         return data
 }
 
-export default function useGetItems(listId: number) {
+export function useGetItems(listId: number) {
     return useQuery('listItems', () => fetchItems(listId))
 }

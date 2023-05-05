@@ -1,43 +1,47 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonTitle, IonToolbar } from '@ionic/react';
+import { useParams } from 'react-router';
 import { cart, checkmarkCircle } from 'ionicons/icons';
 import './ListDetail.css';
 
-import useGetItems from '../hooks/useGetItems';
+import { useGetItems } from '../hooks/useGetItems';
 
 const Tab3: React.FC = () => {
 
-  const { data: items } = useGetItems(2)
+    const { id } = useParams<{ id: any }>()
 
-//   const listDisplay = lists?.map(item => (
-//     <IonItem>
-//       <IonIcon icon={item.list_type === 'grocery' ? cart : checkmarkCircle} slot='start' /> 
-//       {item.name}
-//     </IonItem>
-//   ))
+    const { data: items } = useGetItems(id)
 
-  const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
+    const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
 
-  return (
+    return (
     <IonPage>
-      <IonHeader>
+        <IonHeader>
         <IonToolbar>
             <IonButtons slot="start">
                 <IonBackButton text="Back" defaultHref='/app/lists' />
             </IonButtons>
         </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
+        </IonHeader>
+        <IonContent fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar>
+            <IonToolbar>
             <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
+            </IonToolbar>
         </IonHeader>
         <IonList>
-            {itemDisplay}
+            {
+                items ? 
+                itemDisplay :
+                <>
+                    <IonItem>
+                        <IonSkeletonText animated={true} style={{ 'width': '40%' }}></IonSkeletonText>
+                    </IonItem>
+                </>
+            }
         </IonList>
-      </IonContent>
+        </IonContent>
     </IonPage>
-  );
+    );
 };
 
 export default Tab3;

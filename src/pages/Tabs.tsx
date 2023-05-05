@@ -26,7 +26,7 @@ const Tabs: React.FC = () => {
                 <Route exact path="/app/lists">
                     <Lists />
                 </Route>
-                <Route path="/app/lists/list">
+                <Route path="/app/lists/:id">
                     <ListDetail />
                 </Route>
                 <Route exact path="/app/tab3">

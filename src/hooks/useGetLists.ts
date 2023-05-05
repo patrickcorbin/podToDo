@@ -13,6 +13,6 @@ const fetchLists = async () => {
     return data
 }
 
-export default function useGetLists() {
+export function useGetLists() {
     return useQuery('lists', () => fetchLists())
 }

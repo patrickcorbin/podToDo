@@ -2,25 +2,20 @@ import { IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonTitle, Io
 import { cart, checkmarkCircle } from 'ionicons/icons';
 import './Lists.css';
 
-import useGetLists from '../hooks/useGetLists';
-import useGetItems from '../hooks/useGetItems';
+import { useGetLists } from '../hooks/useGetLists';
 
 const Lists: React.FC = () => {
 
   const { data: lists } = useGetLists()
 
-  const { data: items } = useGetItems(2)
-
   const listDisplay = lists?.map(item => (
     <IonItem className="background-white"
-      routerLink='/app/lists/list'
+      routerLink={`/app/lists/${item.id}`}
     >
       <IonIcon icon={item.list_type === 'grocery' ? cart : checkmarkCircle} slot='start' /> 
       {item.name}
     </IonItem>
   ))
-
-  const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
 
   return (
     <IonPage>
@@ -38,7 +33,6 @@ const Lists: React.FC = () => {
         <IonList className="container">
           {listDisplay}
         </IonList>
-        {itemDisplay}
       </IonContent>
     </IonPage>
   );
