@@ -36,6 +36,9 @@ const Tab3: React.FC = () => {
                     <IonItem>
                         <IonSkeletonText animated={true} style={{ 'width': '40%' }}></IonSkeletonText>
                     </IonItem>
+                    <IonItem>
+                        <IonSkeletonText animated={true} style={{ 'width': '40%' }}></IonSkeletonText>
+                    </IonItem>
                 </>
             }
         </IonList>
