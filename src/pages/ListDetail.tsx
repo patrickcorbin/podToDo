@@ -1,17 +1,34 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonTitle, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
 import { cart, checkmarkCircle } from 'ionicons/icons';
 import './ListDetail.css';
 
-import { useGetItems } from '../hooks/useGetItems';
+import { useGetItems, updateItem, useUpdateItem } from '../hooks/useGetItems';
+import { useEffect } from 'react';
+import ListItem from '../components/ListItem';
 
 const Tab3: React.FC = () => {
 
     const { id } = useParams<{ id: any }>()
 
-    const { data: items } = useGetItems(id)
+    const { data: items, refetch } = useGetItems(id)
 
-    const itemDisplay = items?.map(item => <h3>{item.title}</h3>)
+    // console.log('page load')
+
+    const handleCheck = async (itemId: number, item: any) => {
+        updateItem(itemId, {
+            ...item,
+            is_checked: !item.is_checked
+        })
+    }
+
+    const itemDisplay = items?.map(item => (
+        <ListItem 
+            key={item.id}
+            item={item}
+            refetch={refetch}
+        />
+    ))
 
     return (
     <IonPage>
