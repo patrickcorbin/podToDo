@@ -5,23 +5,20 @@ import { useGetItems, updateItem, useUpdateItem } from '../hooks/useGetItems';
 
 interface ContainerProps {
     item: any;
-    refetch: any;
 }
 
-const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
+const ListItem: React.FC<ContainerProps> = ({ item }) => {
 
-    const handleChange = useUpdateItem(item.id, {
-        ...item,
-        is_checked: !item.is_checked
-    })
+    // const handleChange = useUpdateItem(item.id, {
+    //     ...item,
+    //     is_checked: !item.is_checked
+    // })
 
     const handleCheck = async (itemId: number, item: any) => {
         updateItem(itemId, {
             ...item,
             is_checked: !item.is_checked
         })
-        // setIsChecked((prevIsChecked: boolean) => !prevIsChecked)
-        // refetch()
     }
 
     return (
@@ -33,7 +30,6 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             slot='start'
             checked={item.is_checked}
             onClick={() => handleCheck(item.id, item)}
-            // onClick={() => handleChange.mutate()}
             labelPlacement='end'
         >
             {item.title}

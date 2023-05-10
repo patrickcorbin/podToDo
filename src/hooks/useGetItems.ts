@@ -26,6 +26,7 @@ const fetchItem = async (itemId: number) => {
         .from('listItems')
         .select()
         .eq('id', itemId)
+        .single()
 
     if (error) {
         throw new Error(error.message)
