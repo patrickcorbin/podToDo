@@ -1,4 +1,4 @@
-import { IonBackButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonTitle, IonToolbar, useIonViewDidLeave } from '@ionic/react';
 import { useParams } from 'react-router';
 import { cart, checkmarkCircle } from 'ionicons/icons';
 import './ListDetail.css';
@@ -13,7 +13,7 @@ const Tab3: React.FC = () => {
 
     const { data: items, refetch } = useGetItems(id)
 
-    // console.log('page load')
+    useIonViewDidLeave(() => refetch())
 
     const handleCheck = async (itemId: number, item: any) => {
         updateItem(itemId, {
