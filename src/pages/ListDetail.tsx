@@ -25,11 +25,14 @@ const Tab3: React.FC = () => {
 
     const [present, dismiss] = useIonModal(ItemModalForm, {
         dismiss: () => dismiss(),
-        listId: id
+        listId: {id}
     })
 
     const modalOptions = {
-        onDidDismiss: () => dismiss(),
+        onDidDismiss: () => {
+            refetch()
+            dismiss()
+        },
         breakpoints: [0, .25, 0.5, 0.75, 1],
         initialBreakpoint: .5,
         backdropBrealpoint: .2
