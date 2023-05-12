@@ -51,7 +51,7 @@ export const updateItem = async (itemId: number, updates: any) => {
         throw new Error(error.message)
     }
 
-    return data
+    // return data
 }
 
 export function useUpdateItem(itemId: number, updates: any) {

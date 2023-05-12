@@ -1,19 +1,19 @@
 import { IonButton, IonContent, IonInput, IonItem, IonTextarea } from "@ionic/react";
 import { useState } from "react";
 import { useAuth } from "../AuthContext";
-import { useGetItems, updateItem, useUpdateItem, insertItem } from '../hooks/useGetItems';
+import { useGetItems, updateItem, useUpdateItem, insertItem, deleteItem } from '../hooks/useGetItems';
 
 
 interface ContainerProps {
     dismiss: any;
-    itemId?: number;
+    item?: any;
     listId: number;
 }
 
-const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, itemId, listId }) => {
+const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, item, listId }) => {
 
-    const [title, setTitle] = useState('')
-    const [note, setNote] = useState('')
+    const [title, setTitle] = useState(item?.title)
+    const [note, setNote] = useState(item?.note)
 
     const { user } = useAuth()
 
@@ -30,10 +30,26 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, itemId, listId }) =>
         dismiss()
     }
 
+    const handleUpdateItem = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        updateItem(item.id, {
+            ...item,
+            title: title,
+            note: note
+        })
+        dismiss()
+    }
+
+    const handleDeleteItem = async (e: any) => {
+        e.preventDefault()
+        deleteItem(item.id)
+        dismiss()
+    }
+
     return (
         <IonContent className="ion-padding background-white">
         <form
-            onSubmit={handleInsertItem}
+            onSubmit={item ? handleUpdateItem : handleInsertItem}
         >
             <IonItem>
                 <IonInput
@@ -63,8 +79,17 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, itemId, listId }) =>
                 size='default'
                 expand='block'
             >
-                Create
+                {item ? 'Update' : 'Create'}
             </IonButton>
+            {item && <IonButton
+                className='login-btn'
+                type='button'
+                size='default'
+                expand='block'
+                onClick={handleDeleteItem}
+            >
+                Delete
+            </IonButton> }
         </form>
         </IonContent>
     )

@@ -18,20 +18,12 @@ const Tab3: React.FC = () => {
 
     const { data: items, refetch } = useGetItems(id)
 
-    // const modal = useRef<HTMLIonModalElement>(null);
-
     const [title, setTitle] = useState('')
     const [note, setNote] = useState('')
     const [currentItem, setCurrentItem] = useState()
 
     const [present, dismiss] = useIonModal(ItemModalForm, {
         dismiss: () => dismiss(),
-        listId: parseInt(id)
-    })
-
-    const[presentUpdate, dismissUpdate] = useIonModal(ItemModalForm, {
-        dismiss: () => dismiss(),
-        item: currentItem,
         listId: parseInt(id)
     })
 
@@ -46,21 +38,6 @@ const Tab3: React.FC = () => {
     }
 
     useIonViewDidLeave(() => refetch())
-
-    const handleInsertItem = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const item = {
-            list_id: {id},
-            title: {title},
-            note: {note},
-            is_checked: false
-        }
-        insertItem(item)
-    }
-
-    const openModal = (item: any) => {
-        presentUpdate(modalOptions)
-    }
 
     const itemDisplay = items?.map(item => (
         <ListItem 
