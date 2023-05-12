@@ -18,14 +18,21 @@ const Tab3: React.FC = () => {
 
     const { data: items, refetch } = useGetItems(id)
 
-    const modal = useRef<HTMLIonModalElement>(null);
+    // const modal = useRef<HTMLIonModalElement>(null);
 
     const [title, setTitle] = useState('')
     const [note, setNote] = useState('')
+    const [currentItem, setCurrentItem] = useState()
 
     const [present, dismiss] = useIonModal(ItemModalForm, {
         dismiss: () => dismiss(),
-        listId: {id}
+        listId: parseInt(id)
+    })
+
+    const[presentUpdate, dismissUpdate] = useIonModal(ItemModalForm, {
+        dismiss: () => dismiss(),
+        item: currentItem,
+        listId: parseInt(id)
     })
 
     const modalOptions = {
@@ -49,6 +56,10 @@ const Tab3: React.FC = () => {
             is_checked: false
         }
         insertItem(item)
+    }
+
+    const openModal = (item: any) => {
+        presentUpdate(modalOptions)
     }
 
     const itemDisplay = items?.map(item => (

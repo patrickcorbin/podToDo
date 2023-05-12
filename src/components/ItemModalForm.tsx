@@ -6,10 +6,11 @@ import { useGetItems, updateItem, useUpdateItem, insertItem } from '../hooks/use
 
 interface ContainerProps {
     dismiss: any;
+    itemId?: number;
     listId: number;
 }
 
-const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, listId }) => {
+const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, itemId, listId }) => {
 
     const [title, setTitle] = useState('')
     const [note, setNote] = useState('')
@@ -20,7 +21,7 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, listId }) => {
         e.preventDefault()
         const item = {
             user_id: user?.id,
-            list_id: 2,
+            list_id: listId,
             title: title,
             note: note,
             is_checked: false
@@ -31,7 +32,6 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, listId }) => {
 
     return (
         <IonContent className="ion-padding background-white">
-        {/* <IonSearchbar onClick={() => modal.current?.setCurrentBreakpoint(0.75)} placeholder="Search"></IonSearchbar> */}
         <form
             onSubmit={handleInsertItem}
         >
@@ -62,7 +62,6 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, listId }) => {
                 type='submit'
                 size='default'
                 expand='block'
-                // onClick={dismiss}
             >
                 Create
             </IonButton>
