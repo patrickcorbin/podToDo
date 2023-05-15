@@ -1,16 +1,17 @@
-import { IonButton, IonCheckbox, IonItem, IonLabel, useIonModal } from "@ionic/react";
-import { useState } from "react";
-import { useGetItems, updateItem, useUpdateItem } from '../hooks/useGetItems';
+import { IonCheckbox, IonItem, useIonModal} from "@ionic/react";
+import { useEffect, useState } from "react";
+import { updateItem} from '../hooks/useGetItems';
 
 import ItemModalForm from '../components/ItemModalForm';
 
 interface ContainerProps {
     item: any;
+    refetch: any;
 }
 
-const ListItem: React.FC<ContainerProps> = ({ item }) => {
+const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
 
-    const { refetch } = useGetItems(item.id)
+    const [isChecked, setIsChecked] = useState<boolean>(item.is_checked)
 
     const [present, dismiss] = useIonModal(ItemModalForm, {
         dismiss: () => dismiss(),
@@ -38,6 +39,7 @@ const ListItem: React.FC<ContainerProps> = ({ item }) => {
             ...item,
             is_checked: !item.is_checked
         })
+        setIsChecked(prevIsChecked => !prevIsChecked)
     }
 
     // const handleUpdateItem = async (e: React.FormEvent<HTMLFormElement>, itemId: number, item: any) => {
@@ -62,6 +64,7 @@ const ListItem: React.FC<ContainerProps> = ({ item }) => {
         <IonCheckbox 
             slot='start'
             checked={item.is_checked}
+            // checked={isChecked}
             onClick={(e: any) => {handleCheck(item.id, item); e.stopPropagation()}}
             labelPlacement='end'
         >   

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { supabase } from "../supabaseClient";
 
@@ -84,6 +85,18 @@ export const deleteItem = async (itemId: number) => {
         throw new Error(error.message)
     }
 }
+
+// const [listItems, setListItems] = useState()
+
+// const listItemsSubscription = supabase.channel('custom-all-channel')
+//   .on(
+//     'postgres_changes',
+//     { event: '*', schema: 'public', table: 'listItems' },
+//     (payload) => {
+//       console.log('Change received!', payload)
+//     }
+//   )
+//   .subscribe()
 
 // export function useUpdateItemsOptimistic() {
 //     const queryClient = useQueryClient()

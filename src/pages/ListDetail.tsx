@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonToolbar, IonModal, useIonViewDidLeave, useIonModal, IonInput, IonTextarea } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonSkeletonText, IonToolbar, IonModal, useIonViewDidLeave, useIonModal, IonInput, IonTextarea, useIonViewWillEnter } from '@ionic/react';
 import { useParams } from 'react-router';
 import { addCircleOutline, cart, checkmarkCircle } from 'ionicons/icons';
 import './ListDetail.css';
@@ -11,6 +11,8 @@ import { useGetList } from '../hooks/useGetLists';
 import ItemModalForm from '../components/ItemModalForm';
 
 const Tab3: React.FC = () => {
+
+    useIonViewWillEnter(() => console.log('page load'))
 
     const { id } = useParams<{ id: any }>()
 
@@ -43,6 +45,7 @@ const Tab3: React.FC = () => {
         <ListItem 
             key={item.id}
             item={item}
+            refetch={refetch}
         />
     ))
 
