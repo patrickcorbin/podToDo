@@ -19,7 +19,13 @@ const fetchItems = async (listId: number) => {
 }
 
 export function useGetItems(listId: number) {
-    return useQuery(['listItems', listId], () => fetchItems(listId))
+    return useQuery(['listItems', listId], () => fetchItems(listId), {
+        refetchInterval: 1000,
+        refetchIntervalInBackground: true,
+        refetchOnWindowFocus: true,
+        retry: false,
+        suspense: true,
+      })
 }
 
 const fetchItem = async (itemId: number) => {
