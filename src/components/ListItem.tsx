@@ -1,6 +1,6 @@
 import { IonCheckbox, IonItem, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
-import { updateItem} from '../hooks/useGetItems';
+import { updateItem, useUpdateItem, useUpdateItemMutate } from '../hooks/useGetItems';
 
 import ItemModalForm from '../components/ItemModalForm';
 
@@ -10,6 +10,11 @@ interface ContainerProps {
 }
 
 const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
+
+    // const { mutate } = useUpdateItemMutate(item.id, item.list_id, {
+    //     ...item,
+    //     is_checked: !item.is_checked
+    // })
 
     const [isChecked, setIsChecked] = useState<boolean>(item.is_checked)
 
@@ -42,6 +47,20 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         setIsChecked(prevIsChecked => !prevIsChecked)
     }
 
+    // const useCheckMutate = async ( itemId: number, item: any) => {
+    //     useUpdateItem(itemId, item.list_id, {
+    //         ...item,
+    //         is_checked: !item.is_checked
+    //     })
+    // }
+
+    // const useHandleCheckMutate = async (itemId: number, item: any) => {
+    //     useUpdateItemMutate(itemId, item.list_id, {
+    //         ...item,
+    //         is_checked: !item.is_checked
+    //     }).mutate()
+    // }
+
     // const handleUpdateItem = async (e: React.FormEvent<HTMLFormElement>, itemId: number, item: any) => {
     //     e.preventDefault()
     //     updateItem(itemId, {
@@ -66,6 +85,7 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             checked={item.is_checked}
             // checked={isChecked}
             onClick={(e: any) => {handleCheck(item.id, item); e.stopPropagation()}}
+            // onClick={(e: any) => {mutate(); e.stopPropagation()}}
             labelPlacement='end'
         >   
             {item.title}

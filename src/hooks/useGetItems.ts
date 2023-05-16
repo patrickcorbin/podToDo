@@ -19,14 +19,16 @@ const fetchItems = async (listId: number) => {
 }
 
 export function useGetItems(listId: number) {
-    return useQuery(['listItems', listId], () => fetchItems(listId), {
-        refetchInterval: 1000,
-        refetchIntervalInBackground: true,
-        refetchOnWindowFocus: true,
-        retry: false,
-        suspense: true,
-      })
+    return useQuery(['listItems', listId], () => fetchItems(listId))
 }
+
+// {
+// refetchInterval: 1000,
+// refetchIntervalInBackground: true,
+// refetchOnWindowFocus: true,
+// retry: false,
+// suspense: true,
+// }
 
 const fetchItem = async (itemId: number) => {
     const { data, error } = await supabase
@@ -61,15 +63,45 @@ export const updateItem = async (itemId: number, updates: any) => {
     // return data
 }
 
-export function useUpdateItem(itemId: number, updates: any) {
+export function useUpdateItem(itemId: number, listId: number, updates: any) {
     const queryClient = useQueryClient()
     return useMutation('listItems', () => updateItem(itemId, updates)
     , {
         onSuccess: () => {
+            // queryClient.invalidateQueries({queryKey: ['listItems', listId]})
             queryClient.refetchQueries('listItems')
         }
     })
 }
+
+export function useUpdateItemMutate(itemId: number, listId: number, updates: any) {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => updateItem(itemId, updates),
+        onSuccess: () => queryClient.invalidateQueries({queryKey: ['listItems', listId]})
+    })
+
+    // return useMutation('listItems', () => updateItem(itemId, updates)
+    // , {
+    //     onSuccess: () => {
+    //         // queryClient.invalidateQueries({queryKey: ['listItems', listId]})
+    //         queryClient.refetchQueries('listItems')
+    //     }
+    // })
+}
+
+// const useAddComment = (id) => {
+//     const queryClient = useQueryClient()
+  
+//     return useMutation({
+//       mutationFn: (newComment) =>
+//         axios.post(`/posts/${id}/comments`, newComment),
+//       onSuccess: () => {
+//         // ✅ refetch the comments list for our blog post
+//         queryClient.invalidateQueries({ queryKey: ['posts', id, 'comments'] })
+//       },
+//     })
+//   }
 
 export const insertItem = async (item: any) => { 
     const { error } = await supabase
