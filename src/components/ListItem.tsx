@@ -11,12 +11,18 @@ interface ContainerProps {
 
 const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
 
-    // const { mutate } = useUpdateItemMutate(item.id, item.list_id, {
-    //     ...item,
-    //     is_checked: !item.is_checked
-    // })
+    const { mutate, status } = useUpdateItemMutate(item.id, item.list_id, {
+        ...item,
+        is_checked: !item.is_checked
+    })
 
     const [isChecked, setIsChecked] = useState<boolean>(item.is_checked)
+
+    useEffect(() => {
+        if (status === 'success') {
+            setIsChecked(prevIsChecked => !prevIsChecked)
+        }
+    }, [status])
 
     const [present, dismiss] = useIonModal(ItemModalForm, {
         dismiss: () => dismiss(),
@@ -45,6 +51,12 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             is_checked: !item.is_checked
         })
         setIsChecked(prevIsChecked => !prevIsChecked)
+        console.log('check called')
+    }
+
+    const handleCheckMutate = async (e: any) => {
+        mutate()
+        e.stopPropagation()
     }
 
     // const useCheckMutate = async ( itemId: number, item: any) => {
@@ -82,10 +94,10 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             
         <IonCheckbox 
             slot='start'
-            checked={item.is_checked}
-            // checked={isChecked}
-            onClick={(e: any) => {handleCheck(item.id, item); e.stopPropagation()}}
-            // onClick={(e: any) => {mutate(); e.stopPropagation()}}
+            // checked={item.is_checked}
+            checked={isChecked}
+            // onClick={(e: any) => {handleCheck(item.id, item); e.stopPropagation()}}
+            onClick={(e: any) => handleCheckMutate(e)}
             labelPlacement='end'
         >   
             {item.title}

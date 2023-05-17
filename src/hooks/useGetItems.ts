@@ -78,7 +78,9 @@ export function useUpdateItemMutate(itemId: number, listId: number, updates: any
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: () => updateItem(itemId, updates),
-        onSuccess: () => queryClient.invalidateQueries({queryKey: ['listItems', listId]})
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['listItems']})
+        }
     })
 
     // return useMutation('listItems', () => updateItem(itemId, updates)
