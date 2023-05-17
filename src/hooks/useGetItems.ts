@@ -63,47 +63,27 @@ export const updateItem = async (itemId: number, updates: any) => {
     // return data
 }
 
-export function useUpdateItem(itemId: number, listId: number, updates: any) {
-    const queryClient = useQueryClient()
-    return useMutation('listItems', () => updateItem(itemId, updates)
-    , {
-        onSuccess: () => {
-            // queryClient.invalidateQueries({queryKey: ['listItems', listId]})
-            queryClient.refetchQueries('listItems')
-        }
-    })
-}
+// export function useUpdateItem(itemId: number, listId: number, updates: any) {
+//     const queryClient = useQueryClient()
+//     return useMutation('listItems', () => updateItem(itemId, updates)
+//     , {
+//         onSuccess: () => {
+//             // queryClient.invalidateQueries({queryKey: ['listItems', listId]})
+//             queryClient.refetchQueries('listItems')
+//         }
+//     })
+// }
 
-export function useUpdateItemMutate(itemId: number, listId: number, updates: any) {
+export function useUpdateItem(itemId: number, listId: number, updates: any) {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: () => updateItem(itemId, updates),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['listItems']})
+            console.log('item updated')
         }
     })
-
-    // return useMutation('listItems', () => updateItem(itemId, updates)
-    // , {
-    //     onSuccess: () => {
-    //         // queryClient.invalidateQueries({queryKey: ['listItems', listId]})
-    //         queryClient.refetchQueries('listItems')
-    //     }
-    // })
 }
-
-// const useAddComment = (id) => {
-//     const queryClient = useQueryClient()
-  
-//     return useMutation({
-//       mutationFn: (newComment) =>
-//         axios.post(`/posts/${id}/comments`, newComment),
-//       onSuccess: () => {
-//         // ✅ refetch the comments list for our blog post
-//         queryClient.invalidateQueries({ queryKey: ['posts', id, 'comments'] })
-//       },
-//     })
-//   }
 
 export const insertItem = async (item: any) => { 
     const { error } = await supabase
@@ -115,6 +95,17 @@ export const insertItem = async (item: any) => {
     }
 }
 
+export function useInsertItem(item: any) {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => insertItem(item),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['listItems']})
+            console.log('item inserted')
+        }
+    })
+}
+
 export const deleteItem = async (itemId: number) => {
     const { error } = await supabase
         .from('listItems')
@@ -124,6 +115,17 @@ export const deleteItem = async (itemId: number) => {
     if (error) {
         throw new Error(error.message)
     }
+}
+
+export function useDeleteItem(itemId: number) {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => deleteItem(itemId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['listItems']})
+            console.log('item deleted')
+        }
+    })
 }
 
 // const [listItems, setListItems] = useState()

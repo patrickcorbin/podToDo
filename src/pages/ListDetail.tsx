@@ -8,11 +8,11 @@ import { useEffect, useRef, useState } from 'react';
 import ListItem from '../components/ListItem';
 import { useGetList } from '../hooks/useGetLists';
 
-import ItemModalForm from '../components/ItemModalForm';
+import ItemModalInsert from '../components/ItemModalInsert';
 
 const Tab3: React.FC = () => {
 
-    useIonViewWillEnter(() => console.log('page load'))
+    // useIonViewWillEnter(() => console.log('page load'))
 
     const { id } = useParams<{ id: any }>()
 
@@ -24,14 +24,14 @@ const Tab3: React.FC = () => {
     const [note, setNote] = useState('')
     const [currentItem, setCurrentItem] = useState()
 
-    const [present, dismiss] = useIonModal(ItemModalForm, {
+    const [present, dismiss] = useIonModal(ItemModalInsert, {
         dismiss: () => dismiss(),
         listId: parseInt(id)
     })
 
     const modalOptions = {
         onDidDismiss: () => {
-            refetch()
+            // refetch()
             dismiss()
         },
         breakpoints: [0, .25, 0.5, 0.75, 1],
@@ -39,7 +39,7 @@ const Tab3: React.FC = () => {
         backdropBrealpoint: .2
     }
 
-    useIonViewDidLeave(() => refetch())
+    // useIonViewDidLeave(() => refetch())
 
     const itemDisplay = items?.map(item => (
         <ListItem 
@@ -84,56 +84,12 @@ const Tab3: React.FC = () => {
             id="open-modal"
             expand='block'
             onClick={() => {
-                refetch()
+                // refetch()
                 present(modalOptions)
             }}
         >
             <IonIcon icon={addCircleOutline} /> 
         </IonButton>
-        {/* <IonModal
-            className='background-white' 
-            ref={modal} 
-            trigger="open-modal" 
-            initialBreakpoint={0.5} 
-            breakpoints={[0, .25, 0.5, 0.75, 1]}
-        >
-          <IonContent className="ion-padding background-white">
-            <form
-                onSubmit={(e) => handleInsertItem(e)}
-            >
-                <IonItem>
-                    <IonInput
-                        value={title}
-                        name='title'
-                        label='Title'
-                        labelPlacement='stacked'
-                        onIonChange={(e) => setTitle(e.detail.value! as string)}
-                        type='text'
-                    >
-                    </IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonTextarea
-                        value={note}
-                        name='note'
-                        label='Note'
-                        labelPlacement='stacked'
-                        onIonChange={(e) => setNote(e.detail.value! as string)}
-                        autoGrow={true}
-                    >
-                    </IonTextarea>
-                </IonItem>
-                <IonButton
-                    className='login-btn'
-                    type='submit'
-                    size='default'
-                    expand='block'
-                >
-                    Create
-                </IonButton>
-            </form>
-          </IonContent>
-        </IonModal> */}
         </IonContent>
     </IonPage>
     );

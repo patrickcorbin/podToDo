@@ -1,55 +1,58 @@
 import { IonButton, IonContent, IonInput, IonItem, IonTextarea } from "@ionic/react";
 import { useState } from "react";
-import { useAuth } from "../AuthContext";
-import { useGetItems, updateItem, useUpdateItem, insertItem, deleteItem } from '../hooks/useGetItems';
+import { deleteItem, useDeleteItem, useUpdateItem } from '../hooks/useGetItems';
 
 
 interface ContainerProps {
     dismiss: any;
     item?: any;
-    listId: number;
 }
 
-const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, item, listId }) => {
+const ItemModalUpdate: React.FC<ContainerProps> = ({ dismiss, item }) => {
 
     const [title, setTitle] = useState(item?.title)
     const [note, setNote] = useState(item?.note)
 
-    const { user } = useAuth()
+    const { mutate: mutateUpdate } = useUpdateItem(item.id, item.list_id, {
+        ...item,
+        title: title,
+        note: note
+    })
 
-    const handleInsertItem = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const item = {
-            user_id: user?.id,
-            list_id: listId,
-            title: title,
-            note: note,
-            is_checked: false
-        }
-        insertItem(item)
-        dismiss()
-    }
+    const { mutate: mutateDelete } = useDeleteItem(item.id)
+
+    // const handleUpdateItemDirect = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     updateItem(item.id, {
+    //         ...item,
+    //         title: title,
+    //         note: note
+    //     })
+    //     dismiss()
+    // }
+
+    // const handleDeleteItemDirect = async (e: any) => {
+    //     e.preventDefault()
+    //     deleteItem(item.id)
+    //     dismiss()
+    // }
 
     const handleUpdateItem = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateItem(item.id, {
-            ...item,
-            title: title,
-            note: note
-        })
+        mutateUpdate()
         dismiss()
     }
 
     const handleDeleteItem = async (e: any) => {
         e.preventDefault()
-        deleteItem(item.id)
+        mutateDelete()
         dismiss()
     }
 
     return (
         <IonContent className="ion-padding background-white">
         <form
-            onSubmit={item ? handleUpdateItem : handleInsertItem}
+            onSubmit={handleUpdateItem}
         >
             <IonItem>
                 <IonInput
@@ -81,18 +84,19 @@ const ItemModalForm: React.FC<ContainerProps> = ({ dismiss, item, listId }) => {
             >
                 {item ? 'Update' : 'Create'}
             </IonButton>
-            {item && <IonButton
-                className='login-btn'
+            <IonButton
+                className='login-btn delete-btn'
                 type='button'
                 size='default'
                 expand='block'
+                color='danger'
                 onClick={handleDeleteItem}
             >
                 Delete
-            </IonButton> }
+            </IonButton>
         </form>
         </IonContent>
     )
 }
 
-export default ItemModalForm
+export default ItemModalUpdate

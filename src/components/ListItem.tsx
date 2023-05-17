@@ -1,8 +1,8 @@
 import { IonCheckbox, IonItem, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
-import { updateItem, useUpdateItem, useUpdateItemMutate } from '../hooks/useGetItems';
+import { updateItem, useUpdateItem } from '../hooks/useGetItems';
 
-import ItemModalForm from '../components/ItemModalForm';
+import ItemModalUpdate from './ItemModalUpdate';
 
 interface ContainerProps {
     item: any;
@@ -11,7 +11,7 @@ interface ContainerProps {
 
 const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
 
-    const { mutate, status } = useUpdateItemMutate(item.id, item.list_id, {
+    const { mutate, status } = useUpdateItem(item.id, item.list_id, {
         ...item,
         is_checked: !item.is_checked
     })
@@ -24,15 +24,14 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         }
     }, [status])
 
-    const [present, dismiss] = useIonModal(ItemModalForm, {
+    const [present, dismiss] = useIonModal(ItemModalUpdate, {
         dismiss: () => dismiss(),
         item: item,
-        listId: item.id
     })
 
     const modalOptions = {
         onDidDismiss: () => {
-            refetch()
+            // refetch()
             dismiss()
         },
         breakpoints: [0, .25, 0.5, 0.75, 1],
@@ -40,48 +39,19 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         backdropBrealpoint: .2
     }
 
-    // const handleChange = useUpdateItem(item.id, {
-    //     ...item,
-    //     is_checked: !item.is_checked
-    // })
-
-    const handleCheck = async (itemId: number, item: any) => {
-        updateItem(itemId, {
-            ...item,
-            is_checked: !item.is_checked
-        })
-        setIsChecked(prevIsChecked => !prevIsChecked)
-        console.log('check called')
-    }
+    // const handleCheck = async (itemId: number, item: any) => {
+    //     updateItem(itemId, {
+    //         ...item,
+    //         is_checked: !item.is_checked
+    //     })
+    //     setIsChecked(prevIsChecked => !prevIsChecked)
+    //     console.log('check called')
+    // }
 
     const handleCheckMutate = async (e: any) => {
         mutate()
         e.stopPropagation()
     }
-
-    // const useCheckMutate = async ( itemId: number, item: any) => {
-    //     useUpdateItem(itemId, item.list_id, {
-    //         ...item,
-    //         is_checked: !item.is_checked
-    //     })
-    // }
-
-    // const useHandleCheckMutate = async (itemId: number, item: any) => {
-    //     useUpdateItemMutate(itemId, item.list_id, {
-    //         ...item,
-    //         is_checked: !item.is_checked
-    //     }).mutate()
-    // }
-
-    // const handleUpdateItem = async (e: React.FormEvent<HTMLFormElement>, itemId: number, item: any) => {
-    //     e.preventDefault()
-    //     updateItem(itemId, {
-    //         ...item,
-    //         title: title,
-    //         note: note
-    //     })
-    //     dismiss()
-    // }
 
     return (
         <IonItem className="background-white"
@@ -94,7 +64,6 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             
         <IonCheckbox 
             slot='start'
-            // checked={item.is_checked}
             checked={isChecked}
             // onClick={(e: any) => {handleCheck(item.id, item); e.stopPropagation()}}
             onClick={(e: any) => handleCheckMutate(e)}
