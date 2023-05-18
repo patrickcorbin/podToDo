@@ -52,6 +52,14 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         mutate()
         e.stopPropagation()
     }
+    
+    // let dueDate: Date
+
+    const dueDate = item.due_date ? new Date(item.due_date) : null
+    const sysDate = Date.now()
+
+    const dueDateFull = dueDate?.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+    const dueDateShort = dueDate?.toLocaleDateString('en-us', {day: 'numeric', month: "short"})
 
     return (
         <IonItem className="background-white"
@@ -76,8 +84,9 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         <IonBadge 
             className="item_badge"
             slot="end"
+            color={item.due_date < sysDate ? 'danger' : 'primary'}
         >
-            {item.due_ate}
+            {dueDateShort}
         </IonBadge>
         <IonBadge 
             className="item_badge"
