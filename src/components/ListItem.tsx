@@ -1,4 +1,4 @@
-import { IonCheckbox, IonItem, useIonModal} from "@ionic/react";
+import { IonAvatar, IonBadge, IonCheckbox, IonItem, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { updateItem, useUpdateItem } from '../hooks/useGetItems';
 
@@ -56,6 +56,7 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
     return (
         <IonItem className="background-white"
             lines='full'
+            
             onClick={() => {
                 refetch()
                 present(modalOptions)
@@ -71,6 +72,13 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         >   
             {item.title}
         </IonCheckbox>
+        
+        <IonBadge slot="end">
+            {item.due_date}
+        </IonBadge>
+        <IonAvatar slot="end">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </IonAvatar>
         </IonItem>
     );
 };
