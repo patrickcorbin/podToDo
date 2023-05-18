@@ -73,12 +73,18 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             {item.title}
         </IonCheckbox>
         
-        <IonBadge slot="end">
-            {item.due_date}
+        <IonBadge 
+            className="item_badge"
+            slot="end"
+        >
+            {item.due_ate}
         </IonBadge>
-        <IonAvatar slot="end">
-            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </IonAvatar>
+        <IonBadge 
+            className="item_badge"
+            slot="end"
+        >
+            PC
+        </IonBadge>
         </IonItem>
     );
 };
