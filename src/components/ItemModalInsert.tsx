@@ -1,8 +1,9 @@
-import { IonButton, IonContent, IonInput, IonItem, IonTextarea } from "@ionic/react";
+import { IonButton, IonContent, IonDatetime, IonInput, IonItem, IonTextarea, IonToggle } from "@ionic/react";
 import { useState } from "react";
 import { useAuth } from "../AuthContext";
 import { useInsertItem} from '../hooks/useGetItems';
 
+import './ItemModal.css';
 
 interface ContainerProps {
     dismiss: any;
@@ -14,6 +15,7 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
 
     const [title, setTitle] = useState(item?.title)
     const [note, setNote] = useState(item?.note)
+    const [hasDueDate, setHasDueDate] = useState<boolean>(false)
 
     const { user } = useAuth()
 
@@ -44,6 +46,10 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
         dismiss()
     }
 
+    const handleDateToggle = async () => {
+        setHasDueDate(prevHasDueDate => !prevHasDueDate)
+    }
+
     return (
         <IonContent className="ion-padding background-white">
         <form
@@ -71,6 +77,25 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
                 >
                 </IonTextarea>
             </IonItem>
+            <IonToggle
+                className="date_toggle"
+                labelPlacement="end"
+                checked={hasDueDate}
+                onIonChange={handleDateToggle}
+            >
+                Due Date
+            </IonToggle>
+            {
+                hasDueDate &&
+                <>
+                <div className="date_picker_container">
+                    <IonDatetime
+                        preferWheel={true}
+                    >
+                    </IonDatetime>
+                </div>
+                </>
+            }
             <IonButton
                 className='login-btn'
                 type='submit'

@@ -35,7 +35,7 @@ const Tab3: React.FC = () => {
             dismiss()
         },
         breakpoints: [0, .25, 0.5, 0.75, 1],
-        initialBreakpoint: .5,
+        initialBreakpoint: .75,
         backdropBrealpoint: .2
     }
 

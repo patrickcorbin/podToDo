@@ -43,3 +43,7 @@ ion-item {
     padding: .5rem;
     border-radius: 1rem;
 }
+
+.date_label {
+    opacity: .45;
+}

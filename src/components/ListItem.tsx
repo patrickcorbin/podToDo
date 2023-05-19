@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonCheckbox, IonItem, useIonModal} from "@ionic/react";
+import { IonAvatar, IonBadge, IonCheckbox, IonItem, IonLabel, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { updateItem, useUpdateItem } from '../hooks/useGetItems';
 
@@ -70,7 +70,6 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
                 present(modalOptions)
             }}
         >
-            
         <IonCheckbox 
             slot='start'
             checked={isChecked}
@@ -80,14 +79,20 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
         >   
             {item.title}
         </IonCheckbox>
+        <IonLabel 
+            className="date_label"
+            slot="end"
+        >
+            {dueDateShort}
+        </IonLabel>
         
-        <IonBadge 
+        {/* <IonBadge 
             className="item_badge"
             slot="end"
             color={item.due_date < sysDate ? 'danger' : 'primary'}
         >
             {dueDateShort}
-        </IonBadge>
+        </IonBadge> */}
         <IonBadge 
             className="item_badge"
             slot="end"

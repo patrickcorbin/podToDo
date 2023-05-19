@@ -1,0 +1,8 @@
+.date_picker_container {
+    display: flex;
+    justify-content: center;
+}
+
+.date_toggle {
+    padding: 1em;
+}
