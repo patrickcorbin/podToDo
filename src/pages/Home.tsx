@@ -8,7 +8,9 @@ import { useState } from 'react';
 
 const Home: React.FC = () => {
 
-  const [date, setDate] = useState()
+  const [date, setDate] = useState<any>(new Date().toISOString())
+
+  console.log(date)
 
   // const { logOut } = useSupabase()
   const { signOut, user } = useAuth()
@@ -56,6 +58,8 @@ const Home: React.FC = () => {
         }
         <IonDatetime
           presentation='date'
+          value={date}
+          onIonChange={(e) => setDate(e.detail.value!)}
         >
         </IonDatetime>
       </IonContent>

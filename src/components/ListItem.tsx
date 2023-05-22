@@ -56,7 +56,7 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
     // let dueDate: Date
 
     const dueDate = item.due_date ? new Date(item.due_date) : null
-    const sysDate = Date.now()
+    const sysDate = new Date
 
     const dueDateFull = dueDate?.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
     const dueDateShort = dueDate?.toLocaleDateString('en-us', {day: 'numeric', month: "short"})
