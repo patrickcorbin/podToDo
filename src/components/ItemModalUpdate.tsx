@@ -1,6 +1,6 @@
-import { IonButton, IonContent, IonInput, IonItem, IonTextarea } from "@ionic/react";
+import { IonButton, IonContent, IonDatetime, IonInput, IonItem, IonTextarea, IonToggle } from "@ionic/react";
 import { useState } from "react";
-import { deleteItem, useDeleteItem, useUpdateItem } from '../hooks/useGetItems';
+import { useDeleteItem, useUpdateItem } from '../hooks/useGetItems';
 
 
 interface ContainerProps {
@@ -12,11 +12,14 @@ const ItemModalUpdate: React.FC<ContainerProps> = ({ dismiss, item }) => {
 
     const [title, setTitle] = useState(item?.title)
     const [note, setNote] = useState(item?.note)
+    const [dueDate, setDueDate] = useState(item?.due_date)
+    const [hasDueDate, setHasDueDate] = useState<boolean>(item?.due_date ? true : false)
 
     const { mutate: mutateUpdate } = useUpdateItem(item.id, item.list_id, {
         ...item,
         title: title,
-        note: note
+        note: note,
+        due_date: hasDueDate ? dueDate : null 
     })
 
     const { mutate: mutateDelete } = useDeleteItem(item.id)
@@ -49,6 +52,10 @@ const ItemModalUpdate: React.FC<ContainerProps> = ({ dismiss, item }) => {
         dismiss()
     }
 
+    const handleDateToggle = async () => {
+        setHasDueDate(prevHasDueDate => !prevHasDueDate)
+    }
+
     return (
         <IonContent className="ion-padding background-white">
         <form
@@ -76,6 +83,28 @@ const ItemModalUpdate: React.FC<ContainerProps> = ({ dismiss, item }) => {
                 >
                 </IonTextarea>
             </IonItem>
+            <IonToggle
+                className="date_toggle"
+                labelPlacement="end"
+                checked={hasDueDate}
+                onIonChange={handleDateToggle}
+            >
+                Due Date
+            </IonToggle>
+            {
+                hasDueDate &&
+                <>
+                <div className="date_picker_container">
+                    <IonDatetime
+                        value={dueDate}
+                        name='dueDate'
+                        preferWheel={true}
+                        onIonChange={(e) => setDueDate(e.detail.value!)}
+                    >
+                    </IonDatetime>
+                </div>
+                </>
+            }
             <IonButton
                 className='login-btn'
                 type='submit'

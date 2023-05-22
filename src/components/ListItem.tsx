@@ -34,8 +34,8 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             // refetch()
             dismiss()
         },
-        breakpoints: [0, .25, 0.5, 0.75, 1],
-        initialBreakpoint: .5,
+        breakpoints: [0, .25, 0.5, 0.75, .8, 1],
+        initialBreakpoint: .8,
         backdropBrealpoint: .2
     }
 
