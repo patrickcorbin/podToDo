@@ -4,11 +4,11 @@ import { supabase } from "../supabaseClient";
 
 // Queries for list items
 
-const fetchItems = async (listId: number) => {
+const fetchItems = async (col: string, colId: number) => {
     const { data, error } = await supabase
         .from('listItems')
         .select()
-        .eq('list_id', listId)
+        .eq(col, colId)
         .order('id')
 
     if (error) {
@@ -18,8 +18,8 @@ const fetchItems = async (listId: number) => {
     return data
 }
 
-export function useGetItems(listId: number) {
-    return useQuery(['listItems', listId], () => fetchItems(listId))
+export function useGetItemsByList(listId: number) {
+    return useQuery(['listItems', listId], () => fetchItems('list_id', listId))
 }
 
 // {

@@ -11,6 +11,7 @@ const Lists: React.FC = () => {
   const listDisplay = lists?.map(item => (
     <IonItem className="background-white"
       routerLink={`/app/lists/${item.id}`}
+      key={item.id}
     >
       <IonIcon icon={item.list_type === 'grocery' ? cart : checkmarkCircle} slot='start' /> 
       {item.name}

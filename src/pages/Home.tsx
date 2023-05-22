@@ -5,12 +5,13 @@ import { useProfile, useUser } from '../hooks/useUser';
 import { useSupabase } from '../hooks/useSupabase';
 import { useAuth } from '../AuthContext';
 import { useState } from 'react';
+import { format } from 'date-fns'
 
 const Home: React.FC = () => {
 
   const [date, setDate] = useState<any>(new Date().toISOString())
 
-  console.log(date)
+  // console.log(format(date, 'MM/dd/yyyy'))
 
   // const { logOut } = useSupabase()
   const { signOut, user } = useAuth()

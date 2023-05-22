@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 import { addCircleOutline, cart, checkmarkCircle } from 'ionicons/icons';
 import './ListDetail.css';
 
-import { useGetItems, updateItem, useUpdateItem, insertItem } from '../hooks/useGetItems';
-import { useEffect, useRef, useState } from 'react';
+import { useGetItemsByList } from '../hooks/useGetItems';
+import { useState } from 'react';
 import ListItem from '../components/ListItem';
 import { useGetList } from '../hooks/useGetLists';
 
@@ -18,7 +18,7 @@ const Tab3: React.FC = () => {
 
     const { data: list } = useGetList(id)
 
-    const { data: items, refetch } = useGetItems(id)
+    const { data: items, refetch } = useGetItemsByList(id)
 
     const [title, setTitle] = useState('')
     const [note, setNote] = useState('')
