@@ -99,6 +99,7 @@ const ItemModalUpdate: React.FC<ContainerProps> = ({ dismiss, item }) => {
                         value={dueDate}
                         name='dueDate'
                         preferWheel={true}
+                        minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"
                         onIonChange={(e) => setDueDate(e.detail.value!)}
                     >
                     </IonDatetime>
