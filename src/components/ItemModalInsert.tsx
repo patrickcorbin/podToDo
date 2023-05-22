@@ -15,6 +15,7 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
 
     const [title, setTitle] = useState(item?.title)
     const [note, setNote] = useState(item?.note)
+    const [dueDate, setDueDate] = useState(item?.due_date)
     const [hasDueDate, setHasDueDate] = useState<boolean>(false)
 
     const { user } = useAuth()
@@ -24,7 +25,8 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
         list_id: listId,
         title: title,
         note: note,
-        is_checked: false
+        is_checked: false,
+        due_date: hasDueDate ? dueDate : null 
     })
 
     // const handleInsertItemDirect = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -90,7 +92,10 @@ const ItemModalInsert: React.FC<ContainerProps> = ({ dismiss, item, listId }) =>
                 <>
                 <div className="date_picker_container">
                     <IonDatetime
+                        value={dueDate}
+                        name='dueDate'
                         preferWheel={true}
+                        onIonChange={(e) => setDueDate(e.detail.value!)}
                     >
                     </IonDatetime>
                 </div>
