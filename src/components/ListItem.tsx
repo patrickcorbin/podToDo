@@ -1,8 +1,10 @@
 import { IonAvatar, IonBadge, IonCheckbox, IonItem, IonLabel, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { updateItem, useUpdateItem } from '../hooks/useGetItems';
+import { format, parseISO } from 'date-fns'
 
 import ItemModalUpdate from './ItemModalUpdate';
+import { parse } from "path";
 
 interface ContainerProps {
     item: any;
@@ -55,11 +57,16 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
     
     // let dueDate: Date
 
-    const dueDate = item.due_date ? new Date(item.due_date) : null
+//     const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
+// const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
+
+// console.log(formattedString)
+
+    const dueDate = item.due_date ? parseISO(item.due_date) : null
     const sysDate = new Date
 
-    const dueDateFull = dueDate?.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-    const dueDateShort = dueDate?.toLocaleDateString('en-us', {day: 'numeric', month: "short"})
+    const dueDateShort = item.due_date ? format(parseISO(item.due_date), 'MMM dd') : null
+    const dueDateFull = item.due_date ? format(parseISO(item.due_date), 'eeee, MMM dd, yyyy') : null
 
     return (
         <IonItem className="background-white"
