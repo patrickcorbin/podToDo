@@ -1,10 +1,9 @@
 import { IonAvatar, IonBadge, IonCheckbox, IonItem, IonLabel, useIonModal} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { updateItem, useUpdateItem } from '../hooks/useGetItems';
-import { format, parseISO } from 'date-fns'
+import { isPast, format, parseISO } from 'date-fns'
 
 import ItemModalUpdate from './ItemModalUpdate';
-import { parse } from "path";
 
 interface ContainerProps {
     item: any;
@@ -65,6 +64,8 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
     const dueDate = item.due_date ? parseISO(item.due_date) : null
     const sysDate = new Date
 
+    const dateFlag = item.due_date ? isPast(parseISO(item.due_date)) : false
+
     const dueDateShort = item.due_date ? format(parseISO(item.due_date), 'MMM dd') : null
     const dueDateFull = item.due_date ? format(parseISO(item.due_date), 'eeee, MMM dd, yyyy') : null
 
@@ -87,8 +88,9 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             {item.title}
         </IonCheckbox>
         <IonLabel 
-            className="date_label"
+            // className="date_label"
             slot="end"
+            color={dateFlag ? 'danger' : 'primary'}
         >
             {dueDateShort}
         </IonLabel>
