@@ -5,7 +5,7 @@ import { useProfile, useUser } from '../hooks/useUser';
 import { useSupabase } from '../hooks/useSupabase';
 import { useAuth } from '../AuthContext';
 import { useState } from 'react';
-import { format } from 'date-fns'
+import { addSeconds, format, formatISO, parseISO } from 'date-fns'
 import { useGetItemsByDate } from '../hooks/useGetItems';
 import ListItem from '../components/ListItem';
 
@@ -29,6 +29,8 @@ const Home: React.FC = () => {
       item={item}
     />
   ))
+
+  // console.log('date', date)
 
   useIonViewDidEnter(() => refetch())
 

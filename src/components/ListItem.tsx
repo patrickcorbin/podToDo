@@ -53,13 +53,6 @@ const ListItem: React.FC<ContainerProps> = ({ item }) => {
         mutate()
         e.stopPropagation()
     }
-    
-    // let dueDate: Date
-
-//     const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
-// const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
-
-// console.log(formattedString)
 
     const dueDate = item.due_date ? parseISO(item.due_date) : null
     const sysDate = new Date
