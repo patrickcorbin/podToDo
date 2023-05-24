@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { supabase } from "../supabaseClient";
+import { add, formatISO, parseISO, sub } from 'date-fns'
 
 // Queries for list items
 
-const fetchItems = async (col: string, colId: number) => {
+const fetchItems = async (col: string, colId: any) => {
     const { data, error } = await supabase
         .from('listItems')
         .select()
@@ -18,17 +18,30 @@ const fetchItems = async (col: string, colId: number) => {
     return data
 }
 
+const fetchItemsByDate = async (col: string, colDate: any) => {
+    const startDate = formatISO(sub(parseISO(colDate), {days: 1}))
+    const endDate = formatISO(add(parseISO(colDate), {days: 1}))
+    const { data, error } = await supabase
+        .from('listItems')
+        .select()
+        .gte(col, startDate)
+        .lte(col, colDate)
+        .order('id')
+
+    if (error) {
+        throw new Error(error.message)
+    }
+
+    return data
+}
+
 export function useGetItemsByList(listId: number) {
     return useQuery(['listItems', listId], () => fetchItems('list_id', listId))
 }
 
-// {
-// refetchInterval: 1000,
-// refetchIntervalInBackground: true,
-// refetchOnWindowFocus: true,
-// retry: false,
-// suspense: true,
-// }
+export function useGetItemsByDate(dateISO: string) {
+    return useQuery(['listItems', dateISO], () => fetchItemsByDate('due_date', dateISO))
+}
 
 const fetchItem = async (itemId: number) => {
     const { data, error } = await supabase

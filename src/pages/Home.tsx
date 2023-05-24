@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonHeader, IonItem, IonPage, IonTitle, IonToolbar, IonSkeletonText, IonDatetime} from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonItem, IonPage, IonTitle, IonToolbar, IonSkeletonText, IonDatetime, useIonViewDidEnter} from '@ionic/react';
 import './Home.css';
 
 import { useProfile, useUser } from '../hooks/useUser';
@@ -6,6 +6,8 @@ import { useSupabase } from '../hooks/useSupabase';
 import { useAuth } from '../AuthContext';
 import { useState } from 'react';
 import { format } from 'date-fns'
+import { useGetItemsByDate } from '../hooks/useGetItems';
+import ListItem from '../components/ListItem';
 
 const Home: React.FC = () => {
 
@@ -18,6 +20,17 @@ const Home: React.FC = () => {
 
   // const { data } = useUser()
   const { data: profile } = useProfile()
+
+  const { data: items, refetch } = useGetItemsByDate(date)
+
+  let itemDisplay = items?.map(item => (
+    <ListItem 
+      key={item.id}
+      item={item}
+    />
+  ))
+
+  useIonViewDidEnter(() => refetch())
 
   return (
     <IonPage>
@@ -63,6 +76,7 @@ const Home: React.FC = () => {
           onIonChange={(e) => setDate(e.detail.value!)}
         >
         </IonDatetime>
+        {itemDisplay}
       </IonContent>
     </IonPage>
   );

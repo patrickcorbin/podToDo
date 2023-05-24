@@ -7,10 +7,10 @@ import ItemModalUpdate from './ItemModalUpdate';
 
 interface ContainerProps {
     item: any;
-    refetch: any;
+    // refetch: any;
 }
 
-const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
+const ListItem: React.FC<ContainerProps> = ({ item }) => {
 
     const { mutate, status } = useUpdateItem(item.id, item.list_id, {
         ...item,
@@ -74,7 +74,7 @@ const ListItem: React.FC<ContainerProps> = ({ item, refetch }) => {
             lines='full'
             
             onClick={() => {
-                refetch()
+                // refetch()
                 present(modalOptions)
             }}
         >

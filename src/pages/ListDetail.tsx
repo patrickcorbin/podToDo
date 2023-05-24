@@ -45,7 +45,7 @@ const Tab3: React.FC = () => {
         <ListItem 
             key={item.id}
             item={item}
-            refetch={refetch}
+            // refetch={refetch}
         />
     ))
 
