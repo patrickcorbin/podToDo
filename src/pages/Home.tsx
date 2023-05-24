@@ -4,17 +4,27 @@ import './Home.css';
 import { useProfile } from '../hooks/useUser';
 import { useAuth } from '../AuthContext';
 import { useState } from 'react';
+import DateCard from '../components/DateCard';
+import { format } from 'date-fns';
 
 
 const Home: React.FC = () => {
 
-  // console.log(format(date, 'MM/dd/yyyy'))
+  const [currentDate, setCurrentDate] = useState<Date>(new Date)
+  const [daysArr, setDaysArr] = useState<any>([currentDate])
 
   // const { logOut } = useSupabase()
   const { signOut, user } = useAuth()
 
   // const { data } = useUser()
   const { data: profile } = useProfile()
+
+  const daysDisplay = daysArr.map((day: any) => (
+    <DateCard 
+      key={Math.random()}
+      date={currentDate}
+    />
+  ))
 
 
   return (
@@ -55,7 +65,7 @@ const Home: React.FC = () => {
               </IonItem>
             </>
         }
-
+        {daysDisplay}
       </IonContent>
     </IonPage>
   );
