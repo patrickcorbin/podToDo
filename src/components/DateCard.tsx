@@ -6,9 +6,15 @@ interface ContainerProps {
 
 const DateCard: React.FC<ContainerProps> = ({ date }) => {
 
+    const weekday = format(date, 'ccc')
+    const day = format(date, 'dd')
+
 
     return (
-        <h1>{format(date, 'MMM dd yyyy')}</h1>
+        <div className='date-card__container'>
+
+        <h1>{weekday}, {day}</h1>
+        </div>
     )
 }
 
