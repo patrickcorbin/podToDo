@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import DateCard from '../components/DateCard';
 
 import { add, addDays, format, subDays } from 'date-fns';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import 'swiper/css';
 
 const Home: React.FC = () => {
@@ -21,10 +21,7 @@ const Home: React.FC = () => {
   // const { data } = useUser()
   const { data: profile } = useProfile()
 
-  // const swiper = new Swiper('.swiper', {
-  //   direction: 'horizontal',
-  //   centeredSlides: true
-  // })
+  // const swiper = useSwiper()
 
   const daysDisplay = daysArr.map((day: any) => (
     <DateCard 
@@ -35,18 +32,18 @@ const Home: React.FC = () => {
 
   const daysSwiper = daysArr.map((day: Date) => (
     <SwiperSlide
-      className='swiper-slide'
-    >
-      <DateCard 
         key={Math.random()}
-        date={day}
-      />
+        className='swiper-slide'
+    >
+        <DateCard 
+          date={day}
+        />
     </SwiperSlide>
   ))
 
   const getDaysArr = () => {
     const newArr = [currentDate]
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
       newArr.push(addDays(currentDate, i))
       newArr.unshift(subDays(currentDate, i))
     }
@@ -99,12 +96,12 @@ const Home: React.FC = () => {
         <Swiper
           className='swiper-container'
           slidesPerView={5}
-          spaceBetween={30}
-          centeredSlides
+          centeredSlides={true}
+          initialSlide={10}
         >
           {daysSwiper}
         </Swiper>
-        {daysDisplay}
+        {/* {daysDisplay} */}
       </IonContent>
     </IonPage>
   );
