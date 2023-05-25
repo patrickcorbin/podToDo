@@ -1,0 +1,9 @@
+.swiper-container {
+    border: red solid 1px;
+}
+
+.swiper-slide {
+    border: red solid 1px;
+    display: flex;
+    justify-content: center;
+}

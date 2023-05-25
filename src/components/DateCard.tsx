@@ -1,4 +1,7 @@
+import { IonCard, IonCardSubtitle, IonCardTitle } from "@ionic/react";
 import { format } from "date-fns";
+
+import './DateCard.css';
 
 interface ContainerProps {
     date: any;
@@ -11,10 +14,10 @@ const DateCard: React.FC<ContainerProps> = ({ date }) => {
 
 
     return (
-        <div className='date-card__container'>
-
-        <h1>{weekday}, {day}</h1>
-        </div>
+        <IonCard className='date-card'>
+            <IonCardSubtitle>{weekday}</IonCardSubtitle>
+            <IonCardTitle>{day}</IonCardTitle>
+        </IonCard>
     )
 }
 
