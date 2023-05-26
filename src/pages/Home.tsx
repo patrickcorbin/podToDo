@@ -7,13 +7,18 @@ import { useEffect, useState } from 'react';
 import DateCard from '../components/DateCard';
 
 import { add, addDays, format, subDays } from 'date-fns';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { useGetItemsByDate } from '../hooks/useGetItems';
 
 const Home: React.FC = () => {
 
+  const daySpan = 10
+
   const [currentDate, setCurrentDate] = useState<Date>(new Date)
   const [daysArr, setDaysArr] = useState<Date[]>([])
+  const [swiperIndex, setSwiperIndex] = useState<number>(daySpan)
+  const [swiperDate, setSwiperDate] = useState<Date>(new Date)
 
   // const { logOut } = useSupabase()
   const { signOut, user } = useAuth()
@@ -21,14 +26,8 @@ const Home: React.FC = () => {
   // const { data } = useUser()
   const { data: profile } = useProfile()
 
-  // const swiper = useSwiper()
+  // const { data } = useGetItemsByDate(daysArr[swiperIndex].toISOString())
 
-  const daysDisplay = daysArr.map((day: any) => (
-    <DateCard 
-      key={Math.random()}
-      date={day}
-    />
-  ))
 
   const daysSwiper = daysArr.map((day: Date) => (
     <SwiperSlide
@@ -43,7 +42,7 @@ const Home: React.FC = () => {
 
   const getDaysArr = () => {
     const newArr = [currentDate]
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= daySpan; i++) {
       newArr.push(addDays(currentDate, i))
       newArr.unshift(subDays(currentDate, i))
     }
@@ -54,6 +53,11 @@ const Home: React.FC = () => {
     getDaysArr()
   }, [])
 
+  // useEffect(() => {
+  //   setSwiperDate(daysArr[swiperIndex])
+  // }, [swiperIndex])
+
+  // console.log(swiperDate.toISOString())
 
   return (
     <IonPage>
@@ -97,11 +101,16 @@ const Home: React.FC = () => {
           className='swiper-container'
           slidesPerView={5}
           centeredSlides={true}
-          initialSlide={10}
+          initialSlide={daySpan}
+          onRealIndexChange={(swiper) => {
+            setSwiperIndex(swiper.realIndex)
+            setSwiperDate(daysArr[swiperIndex])
+          }}
         >
           {daysSwiper}
         </Swiper>
-        {/* {daysDisplay} */}
+        {swiperIndex}
+        {swiperDate?.toISOString()}
       </IonContent>
     </IonPage>
   );
