@@ -10,15 +10,16 @@ import { add, addDays, format, subDays } from 'date-fns';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetItemsByDate } from '../hooks/useGetItems';
+import ListItem from '../components/ListItem';
 
 const Home: React.FC = () => {
 
   const daySpan = 10
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date)
-  const [daysArr, setDaysArr] = useState<Date[]>([])
+  const [daysArr, setDaysArr] = useState<Date[]>([currentDate])
   const [swiperIndex, setSwiperIndex] = useState<number>(daySpan)
-  const [swiperDate, setSwiperDate] = useState<Date>(new Date)
+  // const [swiperDate, setSwiperDate] = useState<string>(new Date().toISOString())
 
   // const { logOut } = useSupabase()
   const { signOut, user } = useAuth()
@@ -27,6 +28,7 @@ const Home: React.FC = () => {
   const { data: profile } = useProfile()
 
   // const { data } = useGetItemsByDate(daysArr[swiperIndex].toISOString())
+  const { data: items } = useGetItemsByDate(daysArr[swiperIndex]?.toISOString())
 
 
   const daysSwiper = daysArr.map((day: Date) => (
@@ -48,6 +50,13 @@ const Home: React.FC = () => {
     }
     setDaysArr([...newArr])
   }
+
+  let itemDisplay = items?.map(item => (
+    <ListItem
+      key={item.id}
+      item={item}
+    />
+  ))
 
   useEffect(() => {
     getDaysArr()
@@ -104,13 +113,12 @@ const Home: React.FC = () => {
           initialSlide={daySpan}
           onRealIndexChange={(swiper) => {
             setSwiperIndex(swiper.realIndex)
-            setSwiperDate(daysArr[swiperIndex])
+            // setSwiperDate(daysArr[swiperIndex]?.toISOString())
           }}
         >
           {daysSwiper}
         </Swiper>
-        {swiperIndex}
-        {swiperDate?.toISOString()}
+        {itemDisplay}
       </IonContent>
     </IonPage>
   );
