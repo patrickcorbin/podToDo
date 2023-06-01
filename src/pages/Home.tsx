@@ -129,7 +129,7 @@ const Home: React.FC = () => {
         >
           {daysSwiper}
         </Swiper>
-        {/* {itemDisplay} */}
+        {itemDisplay}
         <Swiper
           id='task-swiper'
           modules={[Controller, IonicSlides]}
