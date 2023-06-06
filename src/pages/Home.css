@@ -2,3 +2,8 @@
     /* border: red solid 1px; */
     margin: 1em 0;
 }
+
+.swiper-container-vertical {
+    /* border: red solid 1px; */
+    height: 35vh;
+}

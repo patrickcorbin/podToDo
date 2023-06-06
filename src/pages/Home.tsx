@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetItemsByDate } from '../hooks/useGetItems';
 import ListItem from '../components/ListItem';
+import DateTaskCard from '../components/DateTaskCard';
 
 const Home: React.FC = () => {
 
@@ -40,6 +41,17 @@ const Home: React.FC = () => {
         className='swiper-slide'
     >
         <DateCard 
+          date={day}
+        />
+    </SwiperSlide>
+  ))
+
+  const dayTaskSwiper = daysArr.map((day: Date) => (
+    <SwiperSlide
+        key={Math.random()}
+        className='swiper-slide'
+    >
+        <DateTaskCard 
           date={day}
         />
     </SwiperSlide>
@@ -132,17 +144,24 @@ const Home: React.FC = () => {
         {itemDisplay}
         <Swiper
           id='task-swiper'
+          className='swiper-container-vertical'
           modules={[Controller, IonicSlides]}
           slidesPerView={3}
           centeredSlides={true}
+          direction='vertical'
           onSwiper={(swiper) => setTaskSwiper(swiper)}
-          // initialSlide={daySpan}
+          initialSlide={daySpan}
           controller={{ control: daySwiper }}
           // onRealIndexChange={(swiper) => {
           //   setSwiperIndex(swiper.realIndex)
           // }}
         >
-          {daysSwiper}
+          {dayTaskSwiper}
+          {/* <SwiperSlide>test 1</SwiperSlide>
+          <SwiperSlide>test 2</SwiperSlide>
+          <SwiperSlide>test 3</SwiperSlide>
+          <SwiperSlide>test 4</SwiperSlide>
+          <SwiperSlide>test 5</SwiperSlide> */}
         </Swiper>
       </IonContent>
     </IonPage>
