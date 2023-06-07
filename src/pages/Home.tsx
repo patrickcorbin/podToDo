@@ -132,7 +132,10 @@ const Home: React.FC = () => {
           modules={[Controller, IonicSlides]}
           slidesPerView={5}
           centeredSlides={true}
-          onSwiper={(swiper) => setDaySwiper(swiper)}
+          onSwiper={(swiper) => {
+            setDaySwiper(swiper)
+            setSwiperIndex(swiper.realIndex)
+          }}
           initialSlide={daySpan}
           controller={{ control: taskSwiper }}
           // onRealIndexChange={(swiper) => {
@@ -141,7 +144,7 @@ const Home: React.FC = () => {
         >
           {daysSwiper}
         </Swiper>
-        {itemDisplay}
+        {/* {itemDisplay} */}
         <Swiper
           id='task-swiper'
           className='swiper-container-vertical'
