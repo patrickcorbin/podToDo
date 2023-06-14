@@ -1,7 +1,7 @@
-import { IonCard, IonCardSubtitle, IonCardTitle } from "@ionic/react";
-import { format } from "date-fns";
+import { IonBadge, IonCard, IonCardSubtitle, IonCardTitle, IonCheckbox, IonItem, IonLabel } from "@ionic/react";
 import { useSwiperSlide } from "swiper/react";
 import { useGetItemsByDate } from '../hooks/useGetItems';
+import { isPast, format, parseISO } from 'date-fns'
 
 import './DateTaskCard.css';
 import ListItem from "./ListItem";

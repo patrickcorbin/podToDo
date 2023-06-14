@@ -20,8 +20,8 @@ const Home: React.FC = () => {
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date)
   const [daysArr, setDaysArr] = useState<Date[]>([currentDate])
-  const [daySwiper, setDaySwiper] = useState<SwiperInterface>()
-  const [taskSwiper, setTaskSwiper] = useState<SwiperInterface>()
+  // const [daySwiper, setDaySwiper] = useState<SwiperInterface>()
+  // const [taskSwiper, setTaskSwiper] = useState<SwiperInterface>()
   const [swiperIndex, setSwiperIndex] = useState<number>(daySpan)
   // const [swiperDate, setSwiperDate] = useState<string>(new Date().toISOString())
 
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
   const { data: profile } = useProfile()
 
   // const { data } = useGetItemsByDate(daysArr[swiperIndex].toISOString())
-  const { data: items } = useGetItemsByDate(daysArr[swiperIndex]?.toISOString())
+  const { data: items, refetch } = useGetItemsByDate(daysArr[swiperIndex]?.toISOString())
 
 
   const daysSwiper = daysArr.map((day: Date) => (
@@ -77,10 +77,15 @@ const Home: React.FC = () => {
     getDaysArr()
   }, [])
 
-  useLayoutEffect(() => {
-    daySwiper?.slideTo(daySpan, 1)
-    // taskSwiper?.slideTo(daySpan, 1)
-  }, [daySwiper])
+  useIonViewDidEnter(() => {
+    console.log('view entered')
+    refetch()
+  })
+
+  // useLayoutEffect(() => {
+  //   daySwiper?.slideTo(daySpan, 1)
+  //   // taskSwiper?.slideTo(daySpan, 1)
+  // }, [daySwiper])
 
   // useEffect(() => {
   //   setSwiperDate(daysArr[swiperIndex])
@@ -132,20 +137,20 @@ const Home: React.FC = () => {
           modules={[Controller, IonicSlides]}
           slidesPerView={5}
           centeredSlides={true}
-          onSwiper={(swiper) => {
-            setDaySwiper(swiper)
-            setSwiperIndex(swiper.realIndex)
-          }}
-          initialSlide={daySpan}
-          controller={{ control: taskSwiper }}
-          // onRealIndexChange={(swiper) => {
+          // onSwiper={(swiper) => {
+          //   setDaySwiper(swiper)
           //   setSwiperIndex(swiper.realIndex)
           // }}
+          initialSlide={daySpan}
+          // controller={{ control: taskSwiper }}
+          onRealIndexChange={(swiper) => {
+            setSwiperIndex(swiper.realIndex)
+          }}
         >
           {daysSwiper}
         </Swiper>
-        {/* {itemDisplay} */}
-        <Swiper
+        {itemDisplay}
+        {/* <Swiper
           id='task-swiper'
           className='swiper-container-vertical'
           modules={[Controller, IonicSlides]}
@@ -160,12 +165,7 @@ const Home: React.FC = () => {
           // }}
         >
           {dayTaskSwiper}
-          {/* <SwiperSlide>test 1</SwiperSlide>
-          <SwiperSlide>test 2</SwiperSlide>
-          <SwiperSlide>test 3</SwiperSlide>
-          <SwiperSlide>test 4</SwiperSlide>
-          <SwiperSlide>test 5</SwiperSlide> */}
-        </Swiper>
+        </Swiper> */}
       </IonContent>
     </IonPage>
   );
