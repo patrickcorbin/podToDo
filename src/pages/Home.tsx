@@ -65,7 +65,7 @@ const Home: React.FC = () => {
     }
     setDaysArr([...newArr])
   }
-
+  
   let itemDisplay = items?.map(item => (
     <ListItem
       key={item.id}

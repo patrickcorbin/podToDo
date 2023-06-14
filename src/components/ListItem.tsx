@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonCheckbox, IonItem, IonLabel, useIonModal} from "@ionic/react";
+import { IonAvatar, IonBadge, IonCheckbox, IonItem, IonLabel, useIonModal, useIonViewWillEnter} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { updateItem, useUpdateItem } from '../hooks/useGetItems';
 import { isPast, format, parseISO } from 'date-fns'
