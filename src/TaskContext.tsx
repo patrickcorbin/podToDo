@@ -1,10 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useGetItemsAll } from './hooks/useGetItems';
 import { supabase } from './supabaseClient';
 
 interface TaskContextType {
     taskArr: any[];
     toggleIsChecked: any;
 }
+
+const { data: items } = useGetItemsAll()
 
 const TaskContext = createContext<TaskContextType>({
     taskArr: [],
@@ -18,6 +21,7 @@ export const TaskProvider = ({ children }: any) => {
     const [loading, setLoading] = useState<boolean>(true)
 
     const value = {
+        items,
         taskArr: [],
         toggleIsChecked: async () => {}
     }
