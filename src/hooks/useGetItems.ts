@@ -35,12 +35,29 @@ const fetchItemsByDate = async (col: string, colDate: any) => {
     return data
 }
 
+const fetchItemsAll = async () => {
+    const { data, error } = await supabase
+        .from('listItems')
+        .select()
+        .order('id')
+
+    if (error) {
+        throw new Error(error.message)
+    }
+
+    return data
+}
+
 export function useGetItemsByList(listId: number) {
     return useQuery(['listItems', listId], () => fetchItems('list_id', listId))
 }
 
 export function useGetItemsByDate(dateISO: string) {
     return useQuery(['listItems', dateISO], () => fetchItemsByDate('due_date', dateISO))
+}
+
+export function useGetItemsAll() {
+    return useQuery(['allItems'], () => fetchItemsAll())
 }
 
 const fetchItem = async (itemId: number) => {
